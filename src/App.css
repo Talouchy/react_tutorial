@@ -1,0 +1,33 @@
+.app-container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr max-content;
+}
+
+.app-container .app-header {
+  background-color: blue;
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  place-content: center;
+  grid-gap: 10px;
+}
+
+.app-container .app-content {
+  background-color: brown;
+}
+
+.app-container .app-footer {
+  background-color: violet;
+}
+
+/* Header */
+.app-header .header-title {
+  display: grid;
+}
+
+.app-header .header-icon {
+  width: 4vw;
+  display: grid;
+  place-content: center;
+}
