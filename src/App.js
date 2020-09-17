@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Header, Content, Footer, IconButton, Icon } from "rsuite";
 import HeaderComponent from "./components/Header";
 import SignInPage from "./components/SignInPage";
+import SingUpComp from "./components/SingUpPage";
 
 import "./App.css";
 
@@ -18,19 +19,19 @@ function App() {
     if (formType === false) {
       return <SignInPage toggleForm={toggleForm} />;
     } else {
-      return <h3 onClick={toggleForm}>Login Page</h3>;
+      return <SingUpComp toggleForm={toggleForm}/>;
     }
   };
 
   const toggleForm = () => {
     setFormType(!formType);
 
-    // if (formType === true) {
-    //   setFormType(false);
-    // } else {
-    //   setFormType(true);
-    // }
-  };
+  //    if (formType === true) {
+  //      setFormType(false);
+  //     } else {
+  //      setFormType(true);
+  //     }
+   };
 
   return (
     <Container className="app-container">
