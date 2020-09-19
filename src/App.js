@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Container, Header, Content, Footer, IconButton, Icon } from "rsuite";
-import HeaderComponent from "./components/Header";
+import React, { useState } from "react";
+import { Container, Content } from "rsuite";
 import SignInComp from "./components/SignInPage";
 import SignUpComp from "./components/SingUpPage";
 import FooterComp from "./components/Footer";
-import HeaderComp from "./components/Header"
+import HeaderComp from "./components/Header";
 import "./App.css";
 
 function App() {
@@ -12,29 +11,28 @@ function App() {
 
   const styles = {
     width: 300,
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  };
 
   const formController = () => {
     if (formType === false) {
-      return(<SignUpComp ToggleForm={ToggleForm} IconStyles={styles}/>);
-    }else {
-      return(<SignInComp ToggleForm={ToggleForm} IconStyles={styles}/>);
+      return <SignUpComp ToggleForm={ToggleForm} IconStyles={styles} />;
+    } else {
+      return <SignInComp ToggleForm={ToggleForm} IconStyles={styles} />;
     }
   };
 
   const ToggleForm = () => {
     setFormType(!formType);
-  }
-
+  };
 
   return (
     <Container className="app-container">
-      <HeaderComp/>
+      <HeaderComp />
 
       <Content className="app-content">{formController()}</Content>
 
-      <FooterComp/>
+      <FooterComp />
     </Container>
   );
 }
