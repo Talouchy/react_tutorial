@@ -7,10 +7,10 @@ function HeaderComponent({ number, addOne }) {
   return (
     <Header className="app-header">
       <span className="header-title">
-        <h1>Number is AROUND: {number}</h1>
+       JavaScript 101
       </span>
       <span className="header-icon">
-        <IconButton icon={<Icon icon="bars" />} onClick={addOne} />
+        <IconButton size="sm" icon={<Icon icon="bars" />} onClick={addOne} />
       </span>
     </Header>
   );

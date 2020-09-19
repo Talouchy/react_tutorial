@@ -3,7 +3,6 @@ import { Container, Header, Content, Footer, IconButton, Icon } from "rsuite";
 import HeaderComponent from "./components/Header";
 import SignInPage from "./components/SignInPage";
 import SingUpComp from "./components/SingUpPage";
-
 import "./App.css";
 
 function App() {
@@ -25,13 +24,8 @@ function App() {
 
   const toggleForm = () => {
     setFormType(!formType);
+  }
 
-  //    if (formType === true) {
-  //      setFormType(false);
-  //     } else {
-  //      setFormType(true);
-  //     }
-   };
 
   return (
     <Container className="app-container">
