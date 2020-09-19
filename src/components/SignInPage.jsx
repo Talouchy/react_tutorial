@@ -1,7 +1,49 @@
 import React from "react";
+import { Button, InputNumber, Input, InputGroup, Placeholder, Container, Header, Content, Footer, Icon, IconButton, SelectPicker, Checkbox, CheckboxGroup } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css';
 
-function SignInPage({ toggleForm }) {
-  return <h2 onClick={toggleForm}>signIn Page</h2>;
+function SignInComp({ToggleForm},{IconStyles}) {
+  return (
+
+    <Content className="form-signin">
+
+        <div className="left-div-signin" >
+            <img src="\signin-image.jpg" alt="Sign Up Logo" height="300px" width="314px" />
+            <a className="link-to-signup" href="#" onClick = { ToggleForm }>I Don't Have an Account</a>
+        </div>
+
+        <div className="right-div-signin">
+
+          <div className="right-top-div-signin">
+            <h1 className="sign-in-title">Sign In</h1>
+
+            <InputGroup inside styles={IconStyles}>
+              <InputGroup.Addon>
+                <Icon icon="envelope"/>
+              </InputGroup.Addon>
+              <Input className="credentials-signin" type="email" Placeholder="Email" />
+            </InputGroup>
+
+            <InputGroup inside styles={IconStyles}>
+              <InputGroup.Addon>
+                <Icon icon="lock"/>
+              </InputGroup.Addon>
+              <Input className="credentials-signin" type="password" Placeholder="Password" />
+            </InputGroup>
+
+          </div>
+
+          <div className="right-bottom-div-signin">
+            <Checkbox>Remember Me</Checkbox>
+            <Button className="sign-in-btn" style={{color:"white"}} onClick = { ToggleForm }>SignIn</Button>
+          </div>
+
+        </div>
+
+
+    </Content>
+
+  );
 }
 
-export default SignInPage;
+export default SignInComp;

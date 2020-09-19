@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Container, Header, Content, Footer, IconButton, Icon } from "rsuite";
 import HeaderComponent from "./components/Header";
-import SignInPage from "./components/SignInPage";
-import SingUpComp from "./components/SingUpPage";
+import SignInComp from "./components/SignInPage";
+import SignUpComp from "./components/SingUpPage";
+import FooterComp from "./components/Footer";
+import HeaderComp from "./components/Header"
 import "./App.css";
 
 function App() {
-  const [num, setNum] = useState(0);
   const [formType, setFormType] = useState(false); // false: SignIn, true: Login
 
-  const toggleNum = () => {
-    if (num == 0) setNum(1);
-    else setNum(0);
-  };
+  const styles = {
+    width: 300,
+    marginBottom: 10
+  }
 
   const formController = () => {
     if (formType === false) {
-      return <SignInPage toggleForm={toggleForm} />;
-    } else {
-      return <SingUpComp toggleForm={toggleForm}/>;
+      return(<SignUpComp ToggleForm={ToggleForm} IconStyles={styles}/>);
+    }else {
+      return(<SignInComp ToggleForm={ToggleForm} IconStyles={styles}/>);
     }
   };
 
-  const toggleForm = () => {
+  const ToggleForm = () => {
     setFormType(!formType);
   }
 
 
   return (
     <Container className="app-container">
-      <HeaderComponent number={num} addOne={toggleNum} />
+      <HeaderComp/>
 
       <Content className="app-content">{formController()}</Content>
 
-      <Footer className="app-footer">Footer</Footer>
+      <FooterComp/>
     </Container>
   );
 }

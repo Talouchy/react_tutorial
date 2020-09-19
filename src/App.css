@@ -5,18 +5,19 @@
   grid-template-rows: max-content 1fr max-content;
 }
 
-
 .app-container .app-content {
-  background-color: rgb(236, 225, 225);
+  display: grid;
+  place-content: center;
+  height :100vh;
+  background-color: rgb(255, 255, 255);
 }
 
-.app-container .app-footer {
-  background-color: violet;
-}
+
 
 /* Header */
+
 .app-container .app-header {
-  background-color: rgb(180, 60, 60);;
+  background-color: rgb(180, 60, 60);
   display: grid;
   grid-template-columns: 1fr max-content;
   place-content: center;
@@ -29,10 +30,199 @@
   font-size: 2em;
   font-weight: bold;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
 }
 
 .app-header .header-icon {
   width: 4vw;
   display: grid;
   place-content: center;
+}
+
+.app-header {
+  margin-top: 60px;   
+}
+
+
+
+/* SignUp Content Styles */
+
+.app-container {
+  display: grid;
+  place-content: center;
+  height :100vh;
+}
+
+.form-signup {
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr max-content;
+  border: 1px solid rgb(204, 198, 198);
+  border-radius: 4px;
+  place-content: center;
+  padding: 10px;
+}
+
+
+.sign-up-title {
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+.signup-left-div {
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr ;
+  grid-template-rows: 1fr max-content;
+  place-content: center;
+  padding: 10px;
+}
+
+.form-signup .left-top-div {
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr 1fr 1fr 1fr;
+}
+
+.sign-up-title {
+  color: rgb(218, 88, 88);
+}
+
+.credentials {
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid rgb(190, 60, 60);
+}
+
+.left-bottom-div {
+  margin-top: 15px;
+}
+
+.left-bottom-div .sign-up-btn {
+  background-color: rgb(219, 84, 84);
+  margin-top: 10px;
+  margin-left: 8px;
+}
+
+.right-div {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+  text-align: center;
+}
+
+.link-to-signin {
+  color: rgb(190, 60, 60);
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+
+
+/* SignIn Content Styles */
+
+.app-container-signin {
+  display: grid;
+  place-content: center;
+  height :100vh;
+}
+
+.form-signin {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr max-content;
+  border: 1px solid rgb(204, 198, 198);
+  border-radius: 4px;
+  place-content: center;
+  padding: 10px;
+}
+
+
+.sign-in-title {
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+.left-div-signin {
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr ;
+  grid-template-rows: max-content max-content;
+  place-content: center;
+  padding: 10px;
+}
+
+.form-signin .right-div-signin {
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr 1fr;
+}
+
+.sign-in-title {
+  color: rgb(218, 88, 88);
+}
+
+.credentials-signin {
+  border: none;
+  border-bottom: 1px solid rgb(190, 60, 60);
+}
+
+.right-bottom-div-signin {
+  margin-top: 15px;
+}
+
+.right-bottom-div-signin .rs-checkbox {
+  margin-bottom: 10px;
+}
+
+
+.right-bottom-div-signin .sign-in-btn {
+  background-color: rgb(219, 84, 84);
+  margin-left: 9px;
+}
+
+.right-top-div-signin {
+  display: grid;
+  grid-gap:20px;
+  grid-template-rows: max-content 1fr 1fr;
+}
+
+.right-div-signin {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr 1fr;
+}
+
+.link-to-signup {
+  color: rgb(190, 60, 60);
+  text-align: center;
+  text-decoration: underline;
+}
+
+
+/* Footer Styles */
+
+
+.app-container .app-footer {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: repeat(3,max-content);
+  place-content: center;
+  background-color:rgb(180, 60, 60);
+}
+
+.app-footer .Footer-txt-clr {
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

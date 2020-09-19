@@ -3,17 +3,17 @@ import { Header, IconButton, Icon } from "rsuite";
 
 const secret_pass = "dasdajsdgjashdgas";
 
-function HeaderComponent({ number, addOne }) {
+function HeaderComp() {
   return (
     <Header className="app-header">
-      <span className="header-title">
+      <div className="header-title">
        JavaScript 101
-      </span>
-      <span className="header-icon">
-        <IconButton size="sm" icon={<Icon icon="bars" />} onClick={addOne} />
-      </span>
+      </div>
+      <div className="header-icon">
+        <IconButton size="sm" icon={<Icon icon="bars" />}/>
+      </div>
     </Header>
   );
 }
 
-export default HeaderComponent;
+export default HeaderComp;
