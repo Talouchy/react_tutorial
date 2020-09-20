@@ -14,15 +14,15 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
       <div className="signup-left-div">
         <div className="left-top-div">
           <h1 className="sign-up-title">Sign Up</h1>
-          {inputList.map(({ icon, placeholder, type }) => (
-            <InputGroup inside styles={IconStyles}>
+          {inputList.map(({ icon, placeholder, type }, i) => (
+            <InputGroup inside styles={IconStyles} key={i}>
               <InputGroup.Addon>
                 <Icon icon={icon} />
               </InputGroup.Addon>
               <Input
                 className="credentials"
                 type={type}
-                Placeholder={placeholder}
+                placeholder={placeholder}
               />
             </InputGroup>
           ))}
@@ -52,9 +52,9 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
           height="280px"
           width="314px"
         />
-        <a className="link-to-signin" href onClick={ToggleForm}>
+        <button className="link-to-signin" onClick={ToggleForm}>
           I Already Have an Account
-        </a>
+        </button>
       </div>
     </Content>
   );

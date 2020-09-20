@@ -12,9 +12,9 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
           height="300px"
           width="314px"
         />
-        <a className="link-to-signup" href onClick={ToggleForm}>
+        <button className="link-to-signup" onClick={ToggleForm}>
           I Don't Have an Account
-        </a>
+        </button>
       </div>
 
       <div className="right-div-signin">
@@ -28,7 +28,7 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
             <Input
               className="credentials-signin"
               type="email"
-              Placeholder="Email"
+              placeholder="Email"
             />
           </InputGroup>
 
@@ -39,7 +39,7 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
             <Input
               className="credentials-signin"
               type="password"
-              Placeholder="Password"
+              placeholder="Password"
             />
           </InputGroup>
         </div>
