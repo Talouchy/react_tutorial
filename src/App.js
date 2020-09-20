@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Container, Header, Content, Footer, IconButton, Icon } from "rsuite";
-import HeaderComponent from "./components/Header";
 import SignInComp from "./components/SignInPage";
 import SignUpComp from "./components/SingUpPage";
 import FooterComp from "./components/Footer";
