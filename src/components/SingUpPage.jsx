@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 
 const inputList = [
@@ -9,6 +9,12 @@ const inputList = [
 ];
 
 function SingUpComp({ ToggleForm }, { IconStyles }) {
+  const [loading, setLoading] = useState(false);
+
+  const SignUpUser = () => {
+    // setLoading(true);
+  };
+
   return (
     <Content className="form-signup">
       <div className="signup-left-div">
@@ -23,6 +29,7 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
                 className="credentials"
                 type={type}
                 placeholder={placeholder}
+                disabled={loading}
               />
             </InputGroup>
           ))}
@@ -38,7 +45,8 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
           <Button
             style={{ color: "white" }}
             className="sign-up-btn"
-            onClick={ToggleForm}
+            onClick={SignUpUser}
+            loading={loading}
           >
             Sign Up
           </Button>
