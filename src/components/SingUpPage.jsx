@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 
 
