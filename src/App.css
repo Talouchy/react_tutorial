@@ -111,6 +111,7 @@
 
 /* SignIn Content Styles */
 
+
 .app-container-signin {
   display: grid;
   place-content: center;
@@ -120,12 +121,12 @@
 .form-signin {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 1px;
   grid-template-columns: 1fr max-content;
   border: 1px solid rgb(204, 198, 198);
   border-radius: 4px;
   place-content: center;
-  padding: 10px;
+  padding: 20px;
 }
 
 .sign-in-title {
@@ -156,6 +157,7 @@
 .credentials-signin {
   border: none;
   border-bottom: 1px solid rgb(190, 60, 60);
+  border-radius: 0px;
 }
 
 .right-bottom-div-signin {

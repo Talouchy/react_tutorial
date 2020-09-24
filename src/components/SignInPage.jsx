@@ -1,13 +1,55 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 import "rsuite/dist/styles/rsuite-default.css";
 
 function SignInComp({ ToggleForm }, { IconStyles }) {
+  
+  const [loading, setloading] = useState(false)
+  const [inputE,setInputE] = useState("") 
+  const [inputP,setInputP] = useState("") 
+
+  const HandlePassChange = (value) => {
+    setInputP(value)
+    console.log("value 'P' is ", value)
+  }
+
+  const HandleEmailChange = (value) => {
+    setInputE(value)
+    console.log("value 'E' is ",value)
+  }
+
+  const SignInUser = () => {
+    const url = "http://localhost:4000/login"
+
+    setloading(true);
+
+    fetch(url, {
+      method:"POST",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({
+        Email: inputE,
+        Password : inputP
+      })
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      setloading(false);
+      console.log("results are ", result)
+    })
+    .catch((error) => {
+      console.log("errors are ",error)
+    })
+  }
+
   return (
     <Content className="form-signin">
       <div className="left-div-signin">
         <img
-          src="\signin-image.jpg"
+          src="/signin-image.jpg"
           alt="Sign Up Logo"
           height="300px"
           width="314px"
@@ -29,6 +71,8 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
               className="credentials-signin"
               type="email"
               placeholder="Email"
+              disabled={loading}
+              onChange={HandleEmailChange}
             />
           </InputGroup>
 
@@ -40,6 +84,8 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
               className="credentials-signin"
               type="password"
               placeholder="Password"
+              disabled={loading}
+              onChange={HandlePassChange}
             />
           </InputGroup>
         </div>
@@ -49,7 +95,8 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
           <Button
             className="sign-in-btn"
             style={{ color: "white" }}
-            onClick={ToggleForm}
+            onClick={SignInUser}
+            loading={loading}
           >
             SignIn
           </Button>
