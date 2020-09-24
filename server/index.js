@@ -1,10 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-<<<<<<< HEAD
-const { Popover } = require("rsuite");
-=======
->>>>>>> 91b77e0cc0228ac98317c213d1e115dd66230f54
 
 const app = express();
 const PORT = 4000;
