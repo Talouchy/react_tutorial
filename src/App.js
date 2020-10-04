@@ -7,7 +7,7 @@ import HeaderComp from "./components/Header";
 import "./App.css";
 
 function App() {
-  const [formType, setFormType] = useState(false); // false: SignIn, true: Login
+  const [formType, setFormType] = useState(true); // false: SignUp, true: Login
 
   const styles = {
     width: 300,

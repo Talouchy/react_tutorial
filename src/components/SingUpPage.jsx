@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 
 
-const inputList = [
-  { icon: "avatar", placeholder: "Name", type: "name" },
-  { icon: "envelope", placeholder: "Email", type: "email" },
-  { icon: "lock", placeholder: "Password", type: "password" },
-  { icon: "key", placeholder: "Confirm Password", type: "password" },
-];
-
-
 function SingUpComp({ ToggleForm }, { IconStyles }) {
 
-  const [loading, setloading] = useState(false)
+  const [loading, setloading] = useState(false);
+  const [inputE, setinputE] = useState("");
+  const [inputP, setinputP] = useState("");
+  const [inputN, setinputN] = useState("");
+
+  const HandleEmailChange = (value) => {
+    setinputE(value);
+    console.log(inputE);
+  }
+
+  const HandlePassChange = (value) => {
+    setinputP(value);
+    console.log(inputP);
+  }
+
+  const HandleNameChange = (value) => {
+    setinputN(value);
+    console.log(inputN);
+  }
 
   const SignUpUser = () => {
     const url = "http://localhost:4000/users"
@@ -20,10 +30,15 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
   
   
     fetch(url, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
-      }
+      },
+      body: JSON.stringify({
+        Name : inputN,
+        Email : inputE,
+        Password : inputP
+      })
     })
     .then((response) => {
       return response.json();
@@ -42,19 +57,56 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
       <div className="signup-left-div">
         <div className="left-top-div">
           <h1 className="sign-up-title">Sign Up</h1>
-          {inputList.map(({ icon, placeholder, type }, i) => (
-            <InputGroup inside styles={IconStyles} key={i}>
-              <InputGroup.Addon>
-                <Icon icon={icon} />
-              </InputGroup.Addon>
-              <Input
-                className="credentials"
-                type={type}
-                placeholder={placeholder}
-                disabled={loading}
-              />
-            </InputGroup>
-          ))}
+          <InputGroup inside styles={IconStyles}>
+            <InputGroup.Addon>
+              <Icon icon="avatar" />
+            </InputGroup.Addon>
+            <Input
+              className="credentials-signin"
+              type="name"
+              placeholder="Name"
+              disabled={loading}
+              onChange={HandleNameChange}
+            />
+          </InputGroup>
+
+          <InputGroup inside styles={IconStyles}>
+            <InputGroup.Addon>
+              <Icon icon="envelope" />
+            </InputGroup.Addon>
+            <Input
+              className="credentials-signin"
+              type="email"
+              placeholder="Email"
+              disabled={loading}
+              onChange={HandleEmailChange}
+            />
+          </InputGroup>
+
+          <InputGroup inside styles={IconStyles}>
+            <InputGroup.Addon>
+              <Icon icon="lock" />
+            </InputGroup.Addon>
+            <Input
+              className="credentials-signin"
+              type="password"
+              placeholder="PassWord"
+              disabled={loading}
+              onChange={HandlePassChange}
+            />
+          </InputGroup>
+
+          <InputGroup inside styles={IconStyles}>
+            <InputGroup.Addon>
+              <Icon icon="key" />
+            </InputGroup.Addon>
+            <Input
+              className="credentials-signin"
+              type="password"
+              placeholder="Confirm PassWord"
+              disabled={loading}
+            />
+          </InputGroup>
         </div>
 
         <div className="left-bottom-div">
