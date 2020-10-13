@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { default: SingUpComp } = require("../src/components/SingUpPage");
-const { default: SignInComp } = require("../src/components/SignInPage");
 
 const app = express();
 const PORT = 4000;
@@ -12,15 +10,19 @@ app.use(bodyParser.json());
 
 var Database = {
     users : [
-        { name:"Pooyan", id: 1, Email: "pooyan@gmail.com" , Password: "123" },
-        { name:"Danny", id: 2, Email: "danny@gmail.com" , Password: "456" },
-        { name:"Amir", id: 3, Email: "amir@gmail.com", Password: "789" }
+      { name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123" },
+      { name:"Danny", id: 2, email: "danny@gmail.com" , password: "456" },
+      { name:"Amir", id: 3, email: "amir@gmail.com", password: "789" }
+    ],
+    books : [
+      { id:"1", name:"JungleBook", pubDate:"1980", price:"10$", author:""},
+      { id:"2", name:"TinTin", pubDate:"1990", price:"20$", author:""},
+      { id:"3", name:"HarryPotter", pubDate:"2000", price:"30$", author:""}
     ]
 }
 
 app.get("/users", (req, res, next) => {
-    console.log("Get Route");
-    res.status(200).json (Database.users);
+    res.status(200).json ({UserList : Database.users});
 });
 
 app.post("/users", (req, res, next) => {
@@ -31,7 +33,7 @@ app.post("/users", (req, res, next) => {
   var LastUser = Database.users[Database.users.length - 1]; 
   var inpId = LastUser.id + 1;
 
-  Database.users.push({ name: inpName, id: inpId, email: inpEmail, pass: inpPass});
+  Database.users.push({ name: inpName, id: inpId, email: inpEmail, password: inpPass});
 
   res.status(200).json(Database.users);
 
@@ -42,38 +44,42 @@ app.post("/login", (req, res, next) => {
 
     var email = req.body.Email;
     var pass = req.body.Password;
-    const [isLogedIn, setisLogedIn] = useState({});
 
     var foundUser = Database.users.find((user) => {
-      if(user.Email == email){
+      if(user.email == email){
         return true 
       }else {
         return false;
       }
     })
     console.log(foundUser);
+
     if(foundUser == undefined){
       res.status(404).json({error : "wrong email"})
     }else{
-      if(foundUser.Password == pass){
-        res.status(200).json("congrats");
-        setisLogedIn({email, pass});
+      if(foundUser.password == pass){
+        res.status(200).json({user : foundUser});
       }else{
         res.status(404).json({error : "Wrong Pass"})
       }
     }
+
   });
     
+app.get("/books", (req, res, next) => {
+  console.log("books rout")
+  res.status(200).json({BookList : Database.books})
+})
 
+app.post("/addbook", (req, res, next) => {
+  console.log("rout reached")
 
-
-app.put("/", () => {
-    
-});
-
-app.delete("/", () => {
-    
-});
+  var name = req.body.Name
+  var pubDate = req.body.PublishedDate
+  var price = req.body.Price
+  
+  res.status(200).json({})
+})
 
 app.listen(PORT, () => {
     console.log("server is listening on port ", PORT);

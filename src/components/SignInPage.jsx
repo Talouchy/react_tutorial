@@ -1,13 +1,14 @@
 import React, {useState} from "react";
-import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
+import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
 import "rsuite/dist/styles/rsuite-default.css";
 
-function SignInComp({ ToggleForm }, { IconStyles }) {
+function SignInComp({ ToggleForm, LogInUser }) {
   
   const [loading, setloading] = useState(false)
-  const [inputE,setInputE] = useState("") 
-  const [inputP,setInputP] = useState("") 
+  const [inputE, setInputE] = useState("") 
+  const [inputP, setInputP] = useState("")
 
+  
   const HandlePassChange = (value) => {
     setInputP(value)
     console.log("value 'P' is ", value)
@@ -38,7 +39,17 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
     })
     .then((result) => {
       setloading(false);
-      console.log("results are ", result)
+      if(result.user){
+        console.log("user is : ", result.user)
+        LogInUser(result.user);
+        Alert.success("Login Successfull !", 2000)
+      }else if(result.error){
+        Alert.error(result.error, 2000)
+        LogInUser({});
+        console.log("error is : ", result.error)
+      }else{
+        console.log("result is : ",result)
+      }
     })
     .catch((error) => {
       console.log("errors are ",error)
@@ -63,7 +74,7 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
         <div className="right-top-div-signin">
           <h1 className="sign-in-title">Sign In</h1>
 
-          <InputGroup inside styles={IconStyles}>
+          <InputGroup inside>
             <InputGroup.Addon>
               <Icon icon="envelope" />
             </InputGroup.Addon>
@@ -76,7 +87,7 @@ function SignInComp({ ToggleForm }, { IconStyles }) {
             />
           </InputGroup>
 
-          <InputGroup inside styles={IconStyles}>
+          <InputGroup inside>
             <InputGroup.Addon>
               <Icon icon="lock" />
             </InputGroup.Addon>

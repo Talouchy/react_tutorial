@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 
 
-function SingUpComp({ ToggleForm }, { IconStyles }) {
+function SingUpComp({ ToggleForm }) {
 
   const [loading, setloading] = useState(false);
   const [inputE, setinputE] = useState("");
@@ -27,7 +27,6 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
   const SignUpUser = () => {
     const url = "http://localhost:4000/users"
     setloading(true);
-  
   
     fetch(url, {
       method: "POST",
@@ -57,7 +56,7 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
       <div className="signup-left-div">
         <div className="left-top-div">
           <h1 className="sign-up-title">Sign Up</h1>
-          <InputGroup inside styles={IconStyles}>
+          <InputGroup inside>
             <InputGroup.Addon>
               <Icon icon="avatar" />
             </InputGroup.Addon>
@@ -70,7 +69,7 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
             />
           </InputGroup>
 
-          <InputGroup inside styles={IconStyles}>
+          <InputGroup inside>
             <InputGroup.Addon>
               <Icon icon="envelope" />
             </InputGroup.Addon>
@@ -83,7 +82,7 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
             />
           </InputGroup>
 
-          <InputGroup inside styles={IconStyles}>
+          <InputGroup inside>
             <InputGroup.Addon>
               <Icon icon="lock" />
             </InputGroup.Addon>
@@ -96,7 +95,7 @@ function SingUpComp({ ToggleForm }, { IconStyles }) {
             />
           </InputGroup>
 
-          <InputGroup inside styles={IconStyles}>
+          <InputGroup inside>
             <InputGroup.Addon>
               <Icon icon="key" />
             </InputGroup.Addon>
