@@ -1,11 +1,15 @@
 import React from "react";
 import { Header, Icon, Navbar, Nav, Dropdown } from "rsuite";
 
-function HeaderComp({logedInUser, setbookForm}) {
+function HeaderComp({logedInUser, setbookForm, setaddBookForm}) {
 
 
   const ToggleBookForm = () => {
     setbookForm(true)
+  }
+
+  const ToggleAddBookForm = () => {
+    setaddBookForm(true)
   }
 
   const HeaderControler= () => {
@@ -45,7 +49,7 @@ function HeaderComp({logedInUser, setbookForm}) {
             <Nav.Item eventkey="1" icon={<Icon icon="home" />} >Home</Nav.Item>
             <Nav.Item eventkey="2">User List</Nav.Item>
             <Nav.Item eventkey="3" onClick={ToggleBookForm}>Book List</Nav.Item>
-            <Nav.Item eventkey="3">Add Book</Nav.Item>
+            <Nav.Item eventkey="4" onClick={ToggleAddBookForm}>Add Book</Nav.Item>
             <Dropdown title="About Us">
               <Dropdown.Item>About Us</Dropdown.Item>
               <Dropdown.Item>Contact Support</Dropdown.Item>

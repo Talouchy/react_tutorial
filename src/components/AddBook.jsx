@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 
-function AddBookComp(){
+function AddBookComp({logedInUser}){
 
     const [loading, setloading] = useState(false);
     const [name, setname] = useState("");
@@ -35,7 +35,8 @@ function AddBookComp(){
             body: JSON.stringify({
               Name: name,
               Date: pubDate,
-              Price: price
+              Price: price,
+              Author: logedInUser.name
             })
         })
         .then((response) => {
@@ -89,7 +90,7 @@ function AddBookComp(){
                   className="credentials-signin"
                   type="number"
                   placeholder="Price"
-                  onClick={HandlepriceChange}
+                  onChange={HandlepriceChange}
                   disabled={loading}
                 />
               </InputGroup>

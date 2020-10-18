@@ -75,10 +75,16 @@ app.post("/addbook", (req, res, next) => {
   console.log("rout reached")
 
   var name = req.body.Name
-  var pubDate = req.body.PublishedDate
+  var pubDate = req.body.Date
   var price = req.body.Price
+  var author = req.body.Author
+  var lastBook = Database.books[Database.books.length - 1]
+  var bookID = lastBook.id + 1
+
+  Database.books.push({ id: bookID, name: name, pubDate: pubDate, price: price, author: author})
+  console.log("New Book List is : " , Database.books)
   
-  res.status(200).json({})
+  res.status(200).json({New_Book : name })
 })
 
 app.listen(PORT, () => {

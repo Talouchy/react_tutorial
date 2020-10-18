@@ -13,6 +13,24 @@ function App() {
   const [formType, setFormType] = useState(false); // false: SignUp,   true: SignIn
   const [logedInUser, setlogedInUser] = useState({}); 
   const [bookForm, setbookForm] = useState(false) // false: Current Page ,   true: BookList
+  const [addBookForm, setaddBookForm] = useState(false) // false: Current Page ,   true: AddBookForm
+  const formNumber = [0,1,2,3,4,5,6,7,8,9,10] 
+  const [formContent, setformContent] = useState(<SignUpComp/>)
+
+  const Form = () => {
+    switch(formNumber){
+      case 1:        
+        return <SignInComp/>;
+      case 2:        
+        return <SignUpComp/>;
+      case 3:        
+        return <UserListComp/>;
+      case 4:        
+        return <BooksComp/>;
+      case 5:        
+        return <AddBookComp/>;
+    }
+  }
 
   const styles = {
     width: 300,
@@ -27,14 +45,21 @@ function App() {
     }
   }
 
+  const ShowAddBookComp = () => {
+    if(addBookForm === false){
+      return <UserListComp/>
+    }else{
+      return <AddBookComp logedInUser={logedInUser}/> 
+    }
+  } 
+
   const formController = () => {
     if (formType === false) {
-      return <AddBookComp/> ;
+      return <SignUpComp ToggleForm={ToggleForm} IconStyles={styles} />
     }else{
       return ContentControler();
     }
   }
-  // <SignUpComp ToggleForm={ToggleForm} IconStyles={styles} /> 
 
   const ToggleForm = () => {
     setFormType(!formType);
@@ -55,10 +80,10 @@ function App() {
 
   return (
     <Container className="app-container">
-      <HeaderComp logedInUser={logedInUser} setbookForm={setbookForm}/>
+      <HeaderComp logedInUser={logedInUser} setbookForm={setbookForm} setaddBookForm={setaddBookForm}/>
       {JSON.stringify(logedInUser)}
 
-      <Content className="app-content">{ bookForm === true ? ShowBookList() : formController()}</Content>
+      <Content className="app-content">{ addBookForm === true ? ShowAddBookComp() : formController()}</Content>
 
       <FooterComp />
     </Container>
