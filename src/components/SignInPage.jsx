@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
 import "rsuite/dist/styles/rsuite-default.css";
 
-function SignInComp({ ToggleForm, LogInUser }) {
+function SignInComp({ ToggleForm, LogInUser, setformNumber }) {
   
   const [loading, setloading] = useState(false)
   const [inputE, setInputE] = useState("") 
