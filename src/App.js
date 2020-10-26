@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Content} from "rsuite";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import SignInComp from "./components/SignInPage";
 import SignUpComp from "./components/SingUpPage";
 import FooterComp from "./components/Footer";
@@ -7,6 +8,7 @@ import HeaderComp from "./components/Header";
 import UserListComp from "./components/UserList";
 import BooksComp from "./components/Books"
 import AddBookComp from "./components/AddBook"
+import UserPageComp from "./components/UserPage"
 import "./App.css";
 
 function App() {
@@ -19,22 +21,6 @@ function App() {
     width: 300,
     marginBottom: 10,
   };
-
-  const ShowBookList = () => {
-    if(bookForm === false){
-      return <UserListComp/>
-    }else {
-      return <BooksComp/>
-    }
-  }
-
-  const ShowAddBookComp = () => {
-    if(addBookForm === false){
-      return <UserListComp/>
-    }else{
-      return <AddBookComp logedInUser={logedInUser}/> 
-    }
-  } 
 
   const formController = () => {
     if (formType === false) {
@@ -59,15 +45,57 @@ function App() {
     }
   }
 
+  const isLoggedIn = Object.keys(logedInUser).length > 0 ;
+
   return (
-    <Container className="app-container">
-      <HeaderComp logedInUser={logedInUser} setbookForm={setbookForm} setaddBookForm={setaddBookForm} setformNumber={setformNumber}/>
-      {JSON.stringify(logedInUser)}
+    <Router>
+      <Container className="app-container">
+        <HeaderComp logedInUser={logedInUser} setbookForm={setbookForm} setaddBookForm={setaddBookForm} />
+        {JSON.stringify(logedInUser)}
 
-  <Content className="app-content">{ addBookForm === true ? ShowAddBookComp() : formController()}</Content>
+        <Content className="app-content">
+          <Switch>
 
-      <FooterComp />
-    </Container>
+            <Route path="/dashboard">
+              { isLoggedIn ? <h1>dashboard</h1> : <Redirect to="/login"/> }
+            </Route>
+
+            <Route path="/users/:id">
+              { isLoggedIn ? <UserPageComp/> : <Redirect to="/login"/> }
+            </Route>
+
+            <Route path="/users">
+              { isLoggedIn ? <UserListComp/> : <Redirect to="/login"/> }
+            </Route>
+
+
+            <Route path="/login">
+              <SignInComp LogInUser={LogInUser}/>
+            </Route>
+            
+            <Route path="/signup">
+              <SignUpComp/>
+            </Route>
+            
+            <Route path="/addbook">
+              { isLoggedIn ? <AddBookComp logedInUser={logedInUser}/> : <Redirect to="/login"/>}
+            </Route>
+
+            <Route path="/books">
+              { isLoggedIn ? <BooksComp/> : <Redirect to ="/login"/>}
+            </Route>
+
+            <Route path="/">
+              <h1>Home Page</h1>
+            </Route>
+
+          </Switch>
+        </Content>
+
+        <FooterComp />
+      </Container>
+    </Router>
+    
   )
 }
 

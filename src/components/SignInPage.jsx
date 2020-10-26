@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
+import { Link, useHistory } from "react-router-dom";
 import "rsuite/dist/styles/rsuite-default.css";
 
-function SignInComp({ ToggleForm, LogInUser, setformNumber }) {
+function SignInComp({ LogInUser }) {
   
+  const history = useHistory();
   const [loading, setloading] = useState(false)
   const [inputE, setInputE] = useState("") 
   const [inputP, setInputP] = useState("")
@@ -43,12 +45,15 @@ function SignInComp({ ToggleForm, LogInUser, setformNumber }) {
         console.log("user is : ", result.user)
         LogInUser(result.user);
         Alert.success("Login Successfull !", 2000)
+        history.push("/dashboard")
       }else if(result.error){
         Alert.error(result.error, 2000)
         LogInUser({});
         console.log("error is : ", result.error)
+        history.push("/login")
       }else{
         console.log("result is : ",result)
+        history.push("/login")
       }
     })
     .catch((error) => {
@@ -65,9 +70,9 @@ function SignInComp({ ToggleForm, LogInUser, setformNumber }) {
           height="300px"
           width="314px"
         />
-        <button className="link-to-signup" onClick={ToggleForm}>
+        <Link to="/signup" className="link-to-signup" >
           I Don't Have an Account
-        </button>
+        </Link>
       </div>
 
       <div className="right-div-signin">

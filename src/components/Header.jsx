@@ -1,20 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Header, Icon, Navbar, Nav, Dropdown } from "rsuite";
 
 function HeaderComp({logedInUser, setbookForm, setaddBookForm}) {
 
-
-  const ToggleBookForm = () => {
-    setbookForm(true)
-  }
-
-  const ToggleAddBookForm = () => {
-    setaddBookForm(true)
-  }
-
-  const HeaderControler= () => {
-    if(Object.keys(logedInUser).length === 0){
-      return <Navbar appearance="inverse" className="app-header">
+  return (
+    <Header className="header">
+      <Navbar appearance="default" className="app-header">
         <Navbar.Header>
           <img
             src="/Logo-JS101.png"
@@ -25,47 +17,34 @@ function HeaderComp({logedInUser, setbookForm, setaddBookForm}) {
         </Navbar.Header>
         <Navbar.Body>
           <Nav>
-            <Nav.Item eventkey="1" icon={<Icon icon="home" />} >Home</Nav.Item>
-            <Dropdown title="About Us">
+            <li className="rs-nav-item">
+              <Link className="rs-nav-item-content" to="/" style={{color:"white"}} eventkey="1" ><Icon icon="home" />Home</Link>
+            </li>
+            { Object.keys(logedInUser) <= 0 ? 
+              <li className="rs-nav-item">
+                <Link className="rs-nav-item-content" to="/login" style={{color:"white"}} eventkey="2" >LogIn</Link>
+              </li> : null}      
+
+            { Object.keys(logedInUser).length > 0 ? <> 
+              <li className="rs-nav-item">
+                <Link className="rs-nav-item-content" to="/users" style={{color:"white"}} eventkey="3">User List</Link>
+              </li>
+
+              <li className="rs-nav-item">
+                <Link className="rs-nav-item-content" to="/books" style={{color:"white"}} eventkey="4">Book List</Link>
+              </li>
+
+              <li className="rs-nav-item">
+                <Link className="rs-nav-item-content" to="/addbook" style={{color:"white"}} eventkey="5">Add Book</Link>
+              </li>
+              </> : null }
+            <Dropdown title="About Us" style={{color:"white"}} >
               <Dropdown.Item>About Us</Dropdown.Item>
               <Dropdown.Item>Contact Support</Dropdown.Item>
             </Dropdown>
-          </Nav>
-        </Navbar.Body>
-      </Navbar>        
-    }
-    else {
-      return  <Navbar appearance="inverse" className="app-header">
-        <Navbar.Header>
-          <img
-            src="/Logo-JS101.png"
-            alt="Logo Pic"
-            height="60px"
-            width="60px"
-          />
-        </Navbar.Header>
-        <Navbar.Body>
-          <Nav >
-            <Nav.Item eventkey="1" icon={<Icon icon="home" />} >Home</Nav.Item>
-            <Nav.Item eventkey="2">User List</Nav.Item>
-            <Nav.Item eventkey="3" onClick={ToggleBookForm}>Book List</Nav.Item>
-            <Nav.Item eventkey="4" onClick={ToggleAddBookForm}>Add Book</Nav.Item>
-            <Dropdown title="About Us">
-              <Dropdown.Item>About Us</Dropdown.Item>
-              <Dropdown.Item>Contact Support</Dropdown.Item>
-            </Dropdown>
-          </Nav>
-          <Nav pullRight>
-            <Nav.Item>Sign Out</Nav.Item>
           </Nav>
         </Navbar.Body>
       </Navbar>
-    }
-  }
-
-  return (
-    <Header className="header">
-      {HeaderControler()}
     </Header>
   );
 }

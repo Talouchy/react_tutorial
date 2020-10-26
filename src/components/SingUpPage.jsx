@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
+import { Link } from "react-router-dom";
 
 
 function SingUpComp({ ToggleForm }) {
@@ -133,9 +134,9 @@ function SingUpComp({ ToggleForm }) {
           height="280px"
           width="314px"
         />
-        <button className="link-to-signin" onClick={ToggleForm}>
+        <Link to="/login" className="link-to-signin" onClick={ToggleForm}>
           I Already Have an Account
-        </button>
+        </Link>
       </div>
     </Content>
   );

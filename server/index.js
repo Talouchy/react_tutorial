@@ -15,9 +15,9 @@ var Database = {
       { name:"Amir", id: 3, email: "amir@gmail.com", password: "789" }
     ],
     books : [
-      { id:"1", name:"JungleBook", pubDate:"1980", price:"10$", author:""},
-      { id:"2", name:"TinTin", pubDate:"1990", price:"20$", author:""},
-      { id:"3", name:"HarryPotter", pubDate:"2000", price:"30$", author:""}
+      { id: 1, name:"JungleBook", pubDate:"1980", price:"10$", author:""},
+      { id: 2, name:"TinTin", pubDate:"1990", price:"20$", author:""},
+      { id: 3, name:"HarryPotter", pubDate:"2000", price:"30$", author:""}
     ]
 }
 
@@ -86,6 +86,24 @@ app.post("/addbook", (req, res, next) => {
   
   res.status(200).json({New_Book : name })
 })
+
+app.get("/users/:userID", (req, res, next) => {
+  var userID = Number(req.params.userID) ;
+
+  var foundUser = Database.users.find((user) => {
+    if(user.id === userID){
+      return true ;
+    }else {
+      return false ;
+    }
+  });
+  
+    if(foundUser){
+      res.status(200).json({ user : foundUser})
+    }else {
+      res.status(404).json({ error : "User Not Found"})
+    }
+});
 
 app.listen(PORT, () => {
     console.log("server is listening on port ", PORT);

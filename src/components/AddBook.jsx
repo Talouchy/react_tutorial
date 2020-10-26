@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
+import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
 
 function AddBookComp({logedInUser}){
 
@@ -44,6 +44,7 @@ function AddBookComp({logedInUser}){
         })
         .then((result) => {
             setloading(false);
+            Alert.success("Book Added !")
             console.log("results are : ",result)
         })
         .catch((error) => {
