@@ -10,9 +10,9 @@ app.use(bodyParser.json());
 
 var Database = {
     users : [
-      { name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123" },
-      { name:"Danny", id: 2, email: "danny@gmail.com" , password: "456" },
-      { name:"Amir", id: 3, email: "amir@gmail.com", password: "789" }
+      { name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123", books: 0 },
+      { name:"Danny", id: 2, email: "danny@gmail.com" , password: "456", books: 0 },
+      { name:"Amir", id: 3, email: "amir@gmail.com", password: "789", books: 0 }
     ],
     books : [
       { id: 1, name:"JungleBook", pubDate:"1980", price:"10$", author:""},
@@ -78,10 +78,12 @@ app.post("/addbook", (req, res, next) => {
   var pubDate = req.body.Date
   var price = req.body.Price
   var author = req.body.Author
+  var addedBooks = req.body.Books
   var lastBook = Database.books[Database.books.length - 1]
   var bookID = lastBook.id + 1
 
   Database.books.push({ id: bookID, name: name, pubDate: pubDate, price: price, author: author})
+  Database.users.push({ books: addedBooks })
   console.log("New Book List is : " , Database.books)
   
   res.status(200).json({New_Book : name })

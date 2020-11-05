@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Content, Table, Button} from "rsuite";
+import { Content, Table, Button, Divider } from "rsuite";
 import { useHistory } from "react-router-dom";
 const { Column, HeaderCell, Cell } = Table;
 
@@ -23,12 +23,28 @@ function UserListComp() {
     console.log("Mounted");
   },[])
   
-  const onRowClick = (row) => {
+  const onRowClick = (row, event) => {
     console.log("Row Data : ", row)
-    history.push("/users/" + row.id)
+    var buttonType = event.target.getAttribute("data-button-type");
+    if(buttonType === null){
+      history.push("/users/" + row.id)
+      console.log("buttonType = ",buttonType)
+    }else {
+      if(buttonType === "edit"){
+        console.log("buttonType = ",buttonType)
+      }else if(buttonType === "remove"){
+        console.log("buttonType = ",buttonType)
+      }
+    }
   }
-  
+
+  const handleChange = (id, key, value) => {
+    const nextData = Object.assign([], userList);
+    var value1 = nextData.find(item => item.id === id)[key] ;
+    console.log("Value 1 = ",value1)
+  }
   return(
+    <Content className="app-content">
       <Content className="Table-div">
         <div className="main-div">
           <Table data={userList} height={300} onRowClick={onRowClick}>
@@ -40,30 +56,38 @@ function UserListComp() {
 
             <Column width={112}>
               <HeaderCell style={{ color: "red" }}>Name</HeaderCell>
-              <Cell dataKey="name"></Cell>
+              <Cell dataKey="name" onChange={handleChange}></Cell>
             </Column>
 
             <Column width={150}>
               <HeaderCell style={{ color: "red" }}>Email</HeaderCell>
-              <Cell dataKey="email"></Cell>
+              <Cell dataKey="email" onChange={handleChange}></Cell>
             </Column>
 
             <Column width={150}>
               <HeaderCell style={{ color: "red" }}>Password</HeaderCell>
-              <Cell dataKey="password"></Cell>
+              <Cell dataKey="password" onChange={handleChange}></Cell>
             </Column>
 
             <Column fixed="right" width={130}>
               <HeaderCell style={{ color: "red" }}>ACTION</HeaderCell>
               <Cell>
                 {(rowData) => {
-                  function HandleAction(){
-                    alert(`id:${rowData.id}`)
+                  const SetEditStatus = () => {
+                    const newData = Object.assign([], userList);
+                    const activeRow = newData.find((user) => {
+                      if(user.id === rowData.id){
+                        return user ;
+                      }
+                    })
+                    console.log("activeRow = ",activeRow)
+                    console.log("Status = ",activeRow.status)
                   }
                   return (
                     <span>
-                      <Button onClick={HandleAction}>Edit</Button>
-                      <Button onClick={HandleAction}>Remove</Button>
+                      <Button appearance="subtle" data-button-type={"edit"} onClick={SetEditStatus}>Edit</Button>
+                      <Divider vertical />
+                      <Button appearance="subtle" data-button-type={"remove"}>Remove</Button>
                     </span>
                   )
                 }}
@@ -73,6 +97,7 @@ function UserListComp() {
           </Table>
         </div>
       </Content>
+    </Content>
   )
 }
 

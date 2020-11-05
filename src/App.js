@@ -9,6 +9,8 @@ import UserListComp from "./components/UserList";
 import BooksComp from "./components/Books"
 import AddBookComp from "./components/AddBook"
 import UserPageComp from "./components/UserPage"
+import HomePageComp from "./components/HomePage"
+import DashBoardComp from "./components/DashBoard"
 import "./App.css";
 
 function App() {
@@ -51,13 +53,13 @@ function App() {
     <Router>
       <Container className="app-container">
         <HeaderComp logedInUser={logedInUser} setbookForm={setbookForm} setaddBookForm={setaddBookForm} />
-        {JSON.stringify(logedInUser)}
+        {/* {JSON.stringify(logedInUser)} */}
 
-        <Content className="app-content">
+        {/* <Content className="app-content"> */}
           <Switch>
 
             <Route path="/dashboard">
-              { isLoggedIn ? <h1>dashboard</h1> : <Redirect to="/login"/> }
+              { isLoggedIn ? <DashBoardComp logedInUser={logedInUser}/> : <Redirect to="/login"/> }
             </Route>
 
             <Route path="/users/:id">
@@ -67,7 +69,6 @@ function App() {
             <Route path="/users">
               { isLoggedIn ? <UserListComp/> : <Redirect to="/login"/> }
             </Route>
-
 
             <Route path="/login">
               <SignInComp LogInUser={LogInUser}/>
@@ -86,11 +87,11 @@ function App() {
             </Route>
 
             <Route path="/">
-              <h1>Home Page</h1>
+              <HomePageComp/>
             </Route>
 
           </Switch>
-        </Content>
+        {/* </Content> */}
 
         <FooterComp />
       </Container>

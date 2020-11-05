@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
+import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert, DatePicker } from "rsuite";
 
 function AddBookComp({logedInUser}){
 
@@ -7,6 +7,7 @@ function AddBookComp({logedInUser}){
     const [name, setname] = useState("");
     const [pubDate, setpubDate] = useState("");
     const [price, setprice] = useState("");
+    const [addedBooks, setaddedBooks] = useState(0)
   
     const HandlePubDateChange = (value) => {
         setpubDate(value);
@@ -36,7 +37,8 @@ function AddBookComp({logedInUser}){
               Name: name,
               Date: pubDate,
               Price: price,
-              Author: logedInUser.name
+              Author: logedInUser.name,
+              Books: addedBooks
             })
         })
         .then((response) => {
@@ -44,8 +46,10 @@ function AddBookComp({logedInUser}){
         })
         .then((result) => {
             setloading(false);
+            setaddedBooks(addedBooks + 1);
             Alert.success("Book Added !")
             console.log("results are : ",result)
+            console.log("added Books : ", addedBooks)
         })
         .catch((error) => {
             console.log("errors are : ",error)
@@ -53,6 +57,7 @@ function AddBookComp({logedInUser}){
     }
 
     return(
+      <Content className="app-content">
         <Content className="form-signup">
           <div className="signup-left-div">
             <div className="left-top-div-BookComp">
@@ -72,15 +77,23 @@ function AddBookComp({logedInUser}){
     
               <InputGroup inside>
                 <InputGroup.Addon>
-                  <Icon icon="calendar-o" />
+                  {/* <Icon icon="calendar-o" /> */}
                 </InputGroup.Addon>
-                <Input
+                <DatePicker oneTap
+                 style={{ width: 285 }}
+                 className="credentials-signin" 
+                 appearance="subtle"
+                 placeholder="Published Date"
+                 disabled={loading}
+                 onChange={HandlePubDateChange}
+                 />
+                  {/* <Input
                   className="credentials-signin"
                   type="number"
                   placeholder="Published Date"
                   disabled={loading}
                   onChange={HandlePubDateChange}
-                />
+                /> */}
               </InputGroup>
     
               <InputGroup inside>
@@ -124,6 +137,7 @@ function AddBookComp({logedInUser}){
             />
           </div>
         </Content>
+      </Content>
         
     )
 }

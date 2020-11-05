@@ -53,91 +53,93 @@ function SingUpComp({ ToggleForm }) {
   }
 
   return (
-    <Content className="form-signup">
-      <div className="signup-left-div">
-        <div className="left-top-div">
-          <h1 className="sign-up-title">Sign Up</h1>
-          <InputGroup inside>
-            <InputGroup.Addon>
-              <Icon icon="avatar" />
-            </InputGroup.Addon>
-            <Input
-              className="credentials-signin"
-              type="name"
-              placeholder="Name"
-              disabled={loading}
-              onChange={HandleNameChange}
-            />
-          </InputGroup>
+    <Content className="app-content">
+      <Content className="form-signup">
+        <div className="signup-left-div">
+          <div className="left-top-div">
+            <h1 className="sign-up-title">Sign Up</h1>
+            <InputGroup inside>
+              <InputGroup.Addon>
+                <Icon icon="avatar" />
+              </InputGroup.Addon>
+              <Input
+                className="credentials-signin"
+                type="name"
+                placeholder="Name"
+                disabled={loading}
+                onChange={HandleNameChange}
+              />
+            </InputGroup>
 
-          <InputGroup inside>
-            <InputGroup.Addon>
-              <Icon icon="envelope" />
-            </InputGroup.Addon>
-            <Input
-              className="credentials-signin"
-              type="email"
-              placeholder="Email"
-              disabled={loading}
-              onChange={HandleEmailChange}
-            />
-          </InputGroup>
+            <InputGroup inside>
+              <InputGroup.Addon>
+                <Icon icon="envelope" />
+              </InputGroup.Addon>
+              <Input
+                className="credentials-signin"
+                type="email"
+                placeholder="Email"
+                disabled={loading}
+                onChange={HandleEmailChange}
+              />
+            </InputGroup>
 
-          <InputGroup inside>
-            <InputGroup.Addon>
-              <Icon icon="lock" />
-            </InputGroup.Addon>
-            <Input
-              className="credentials-signin"
-              type="password"
-              placeholder="PassWord"
-              disabled={loading}
-              onChange={HandlePassChange}
-            />
-          </InputGroup>
+            <InputGroup inside>
+              <InputGroup.Addon>
+                <Icon icon="lock" />
+              </InputGroup.Addon>
+              <Input
+                className="credentials-signin"
+                type="password"
+                placeholder="PassWord"
+                disabled={loading}
+                onChange={HandlePassChange}
+              />
+            </InputGroup>
 
-          <InputGroup inside>
-            <InputGroup.Addon>
-              <Icon icon="key" />
-            </InputGroup.Addon>
-            <Input
-              className="credentials-signin"
-              type="password"
-              placeholder="Confirm PassWord"
-              disabled={loading}
-            />
-          </InputGroup>
+            <InputGroup inside>
+              <InputGroup.Addon>
+                <Icon icon="key" />
+              </InputGroup.Addon>
+              <Input
+                className="credentials-signin"
+                type="password"
+                placeholder="Confirm PassWord"
+                disabled={loading}
+              />
+            </InputGroup>
+          </div>
+
+          <div className="left-bottom-div">
+            <Checkbox>
+              I agree all statements in{" "}
+              <a className="link-to-signin" href="/terms">
+                Terms of service
+              </a>
+            </Checkbox>
+            <Button
+              style={{ color: "white" }}
+              className="sign-up-btn"
+              onClick={SignUpUser}
+              loading={loading}
+            >
+              {loading === true ? "Loading..." : "SignUp"}
+            </Button>
+          </div>
         </div>
 
-        <div className="left-bottom-div">
-          <Checkbox>
-            I agree all statements in{" "}
-            <a className="link-to-signin" href="/terms">
-              Terms of service
-            </a>
-          </Checkbox>
-          <Button
-            style={{ color: "white" }}
-            className="sign-up-btn"
-            onClick={SignUpUser}
-            loading={loading}
-          >
-            {loading === true ? "Loading..." : "SignUp"}
-          </Button>
+        <div className="right-div">
+          <img
+            src="\signup-image.jpg"
+            alt="Sign Up Logo"
+            height="280px"
+            width="314px"
+          />
+          <Link to="/login" className="link-to-signin" onClick={ToggleForm}>
+            I Already Have an Account
+          </Link>
         </div>
-      </div>
-
-      <div className="right-div">
-        <img
-          src="\signup-image.jpg"
-          alt="Sign Up Logo"
-          height="280px"
-          width="314px"
-        />
-        <Link to="/login" className="link-to-signin" onClick={ToggleForm}>
-          I Already Have an Account
-        </Link>
-      </div>
+      </Content>
     </Content>
   );
 }

@@ -20,22 +20,30 @@ function HeaderComp({logedInUser, setbookForm, setaddBookForm}) {
             <li className="rs-nav-item">
               <Link className="rs-nav-item-content" to="/" style={{color:"white"}} eventkey="1" ><Icon icon="home" />Home</Link>
             </li>
+            
+            { Object.keys(logedInUser).length > 0 ? <>
+              <li className="rs-nav-item">
+                <Link className="rs-nav-item-content" to="/dashboard" style={{color:"white"}} eventkey="2">Dashboard</Link>
+              </li>
+              </> : null}
+            
+
             { Object.keys(logedInUser) <= 0 ? 
               <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/login" style={{color:"white"}} eventkey="2" >LogIn</Link>
+                <Link className="rs-nav-item-content" to="/login" style={{color:"white"}} eventkey="3" >LogIn</Link>
               </li> : null}      
 
             { Object.keys(logedInUser).length > 0 ? <> 
               <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/users" style={{color:"white"}} eventkey="3">User List</Link>
+                <Link className="rs-nav-item-content" to="/users" style={{color:"white"}} eventkey="4">User List</Link>
               </li>
 
               <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/books" style={{color:"white"}} eventkey="4">Book List</Link>
+                <Link className="rs-nav-item-content" to="/books" style={{color:"white"}} eventkey="5">Book List</Link>
               </li>
 
               <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/addbook" style={{color:"white"}} eventkey="5">Add Book</Link>
+                <Link className="rs-nav-item-content" to="/addbook" style={{color:"white"}} eventkey="6">Add Book</Link>
               </li>
               </> : null }
             <Dropdown title="About Us" style={{color:"white"}} >

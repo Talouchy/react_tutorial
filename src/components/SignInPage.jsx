@@ -13,12 +13,10 @@ function SignInComp({ LogInUser }) {
   
   const HandlePassChange = (value) => {
     setInputP(value)
-    console.log("value 'P' is ", value)
   }
 
   const HandleEmailChange = (value) => {
     setInputE(value)
-    console.log("value 'E' is ",value)
   }
 
   const SignInUser = () => {
@@ -62,62 +60,64 @@ function SignInComp({ LogInUser }) {
   }
 
   return (
-    <Content className="form-signin">
-      <div className="left-div-signin">
-        <img
-          src="/signin-image.jpg"
-          alt="Sign Up Logo"
-          height="300px"
-          width="314px"
-        />
-        <Link to="/signup" className="link-to-signup" >
-          I Don't Have an Account
-        </Link>
-      </div>
-
-      <div className="right-div-signin">
-        <div className="right-top-div-signin">
-          <h1 className="sign-in-title">Sign In</h1>
-
-          <InputGroup inside>
-            <InputGroup.Addon>
-              <Icon icon="envelope" />
-            </InputGroup.Addon>
-            <Input
-              className="credentials-signin"
-              type="email"
-              placeholder="Email"
-              disabled={loading}
-              onChange={HandleEmailChange}
-            />
-          </InputGroup>
-
-          <InputGroup inside>
-            <InputGroup.Addon>
-              <Icon icon="lock" />
-            </InputGroup.Addon>
-            <Input
-              className="credentials-signin"
-              type="password"
-              placeholder="Password"
-              disabled={loading}
-              onChange={HandlePassChange}
-            />
-          </InputGroup>
+    <Content className="app-content">
+      <Content className="form-signin">
+        <div className="left-div-signin">
+          <img
+            src="/signin-image.jpg"
+            alt="Sign Up Logo"
+            height="300px"
+            width="314px"
+          />
+          <Link to="/signup" className="link-to-signup" >
+            I Don't Have an Account
+          </Link>
         </div>
 
-        <div className="right-bottom-div-signin">
-          <Checkbox>Remember Me</Checkbox>
-          <Button
-            className="sign-in-btn"
-            style={{ color: "white" }}
-            onClick={SignInUser}
-            loading={loading}
-          >
-            SignIn
-          </Button>
+        <div className="right-div-signin">
+          <div className="right-top-div-signin">
+            <h1 className="sign-in-title">Sign In</h1>
+
+            <InputGroup inside>
+              <InputGroup.Addon>
+                <Icon icon="envelope" />
+              </InputGroup.Addon>
+              <Input
+                className="credentials-signin"
+                type="email"
+                placeholder="Email"
+                disabled={loading}
+                onChange={HandleEmailChange}
+              />
+            </InputGroup>
+
+            <InputGroup inside>
+              <InputGroup.Addon>
+                <Icon icon="lock" />
+              </InputGroup.Addon>
+              <Input
+                className="credentials-signin"
+                type="password"
+                placeholder="Password"
+                disabled={loading}
+                onChange={HandlePassChange}
+              />
+            </InputGroup>
+          </div>
+
+          <div className="right-bottom-div-signin">
+            <Checkbox>Remember Me</Checkbox>
+            <Button
+              className="sign-in-btn"
+              style={{ color: "white" }}
+              onClick={SignInUser}
+              loading={loading}
+            >
+              SignIn
+            </Button>
+          </div>
         </div>
-      </div>
+      </Content>
     </Content>
   );
 }
