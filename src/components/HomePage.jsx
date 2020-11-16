@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Content, Carousel, Panel, PanelGroup } from "rsuite";
 
 function HomePageComp() {
@@ -10,19 +10,19 @@ function HomePageComp() {
             <Carousel autoplay className="carousel" placement="bottom" shape="bar">
               <img
                 src="/Book_1.jpg"
-                alt="Image Not Found"
+                alt="Not Found"
                 height="100px"
                 width="150px"
               />
               <img
                 src="Book_2.jpg"
-                alt="Image Not Found"
+                alt="Not Found"
                 height="100px"
                 width="150px"
               />
               <img
                 src="Book_3.jpg"
-                alt="Image Not Found"
+                alt="Not Found"
                 height="100px"
                 width="150px"
               />
@@ -115,7 +115,7 @@ function HomePageComp() {
                 height="180"
                 width="150"
               /> 
-              <a href="#" className="book-link" >Link To Book</a>
+              <a href="#Book" className="book-link" >Link To Book</a>
             </div>
 
           </Panel>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Content} from "rsuite";
+import { Container } from "rsuite";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import SignInComp from "./components/SignInPage";
 import SignUpComp from "./components/SingUpPage";
@@ -15,22 +15,13 @@ import "./App.css";
 
 function App() {
   const [formType, setFormType] = useState(false); // false: SignUp,   true: SignIn
-  const [logedInUser, setlogedInUser] = useState({}); 
-  const [bookForm, setbookForm] = useState(false) // false: Current Page ,   true: BookList
-  const [addBookForm, setaddBookForm] = useState(false) // false: Current Page ,   true: AddBookForm
+  // const [logedInUser, setlogedInUser] = useState({}); 
+  const [logedInUser, setlogedInUser] = useState({ name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123", books: 0 }); 
 
   const styles = {
     width: 300,
     marginBottom: 10,
   };
-
-  const formController = () => {
-    if (formType === false) {
-      return <SignUpComp ToggleForm={ToggleForm} IconStyles={styles} />
-    }else{
-      return ContentControler();
-    }
-  }
 
   const ToggleForm = () => {
     setFormType(!formType);
@@ -52,7 +43,7 @@ function App() {
   return (
     <Router>
       <Container className="app-container">
-        <HeaderComp logedInUser={logedInUser} setbookForm={setbookForm} setaddBookForm={setaddBookForm} />
+        <HeaderComp logedInUser={logedInUser} />
         {/* {JSON.stringify(logedInUser)} */}
 
         {/* <Content className="app-content"> */}

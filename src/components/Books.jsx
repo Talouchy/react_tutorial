@@ -23,7 +23,7 @@ function BooksComp() {
       <Content className="app-content">
         <Content className="Table-div-Books">
           <div className="main-div-Books">
-            <Table data={bookList} height={500}>
+            <Table data={bookList} height={300}>
 
               <Column align="center" width={112}>
                 <HeaderCell style={{color : "red"}}>ID</HeaderCell>

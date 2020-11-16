@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Header, Icon, Navbar, Nav, Dropdown } from "rsuite";
 
-function HeaderComp({logedInUser, setbookForm, setaddBookForm}) {
+function HeaderComp({logedInUser}) {
 
   return (
     <Header className="header">

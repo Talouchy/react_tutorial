@@ -1,8 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { Content, Table, Button, Divider } from "rsuite";
+import { Content, Table, Button, Divider, Input, Popover, Whisper } from "rsuite";
 import { useHistory } from "react-router-dom";
 const { Column, HeaderCell, Cell } = Table;
 
+function EditableCell({ onChange , ...props}) {
+
+  const onInputChange = (value) => {
+    onChange( props.rowData.id, props.dataKey, value )
+  }
+
+  if(props.rowData.status === "edit" && props.dataKey !== "id"){
+    return (
+      <Cell {...props}>
+        <Input
+        type="text"
+        defaultValue = {props.rowData[props.dataKey]}
+        data-button-type={"input"}
+        onChange = {onInputChange}
+        />
+      </Cell>
+    )
+  }else {
+    return <Cell {...props}/>
+  }
+}
+
+// Pop Over
+
+  const Speaker = ({ content, ...props }) => {
+    return (
+      <Popover title="Title" {...props}>
+        <p>This is a Popover </p>
+        <p>{content}</p>
+      </Popover>
+    )
+  }
+
+  const PopOverElement = ({ placement, rowData }) => (
+    <Whisper
+      trigger="click"
+      placement={placement}
+      speaker={<Speaker content={`I am positioned to the ${placement}`} />}
+    >
+      <Button appearance="subtle" data-button-type={"edit"}>{rowData.status ? "Save" : "Edit"}</Button>
+    </Whisper>
+  );
+
+// end of pop over
 
 function UserListComp() {
   const history = useHistory();
@@ -26,23 +70,70 @@ function UserListComp() {
   const onRowClick = (row, event) => {
     console.log("Row Data : ", row)
     var buttonType = event.target.getAttribute("data-button-type");
+
     if(buttonType === null){
       history.push("/users/" + row.id)
       console.log("buttonType = ",buttonType)
-    }else {
-      if(buttonType === "edit"){
-        console.log("buttonType = ",buttonType)
-      }else if(buttonType === "remove"){
-        console.log("buttonType = ",buttonType)
+
+    }else if(buttonType === "edit"){
+      console.log("buttonType = ",buttonType)
+
+      const newUserList = Object.assign([], userList);
+      const activeRow = newUserList.find((user) => {
+        if(user.id === row.id){
+          return true 
+        }else {
+          return false 
+        }
+      })
+      
+      if(activeRow.status) {
+        activeRow.status = undefined ;
+      }else {
+        activeRow.status = "edit";
       }
+
+      console.log("Active Row Status = ",activeRow.status)
+
+    }else if(buttonType === "remove"){
+      console.log("buttonType = ",buttonType)
+    }else if (buttonType === "input"){
+      console.log("Button Type = ",buttonType)
     }
   }
 
   const handleChange = (id, key, value) => {
-    const nextData = Object.assign([], userList);
-    var value1 = nextData.find(item => item.id === id)[key] ;
-    console.log("Value 1 = ",value1)
-  }
+    console.log(id, key, value)
+    const url = "http://localhost:4000/updateusers"
+    const newUserList = Object.assign([], userList);
+    var user = newUserList.find(user => user.id === id)
+      
+      user[key] = value;
+      setuserList(newUserList)
+      console.log("ActiveRow ID = ",id)
+      console.log("User[key] = ",user[key])
+
+  //     fetch(url,{
+  //       method: "POST",
+  //       headers:{
+  //         "Content-Type" : "application.json"
+  //       },
+  //       body: JSON.stringify({
+  //         NewUserList: newUserList,
+  //         NewValue: value
+  //       })
+  //     })
+  //     .then((response) => {
+  //       return response.json()
+  //     })
+  //     .then((result) => {
+  //       console.log("put results = ",result)
+  //     })
+  //     .catch((error) => {
+  //       console.log("PUT errors are = ",error)
+  //     })
+  // }
+
   return(
     <Content className="app-content">
       <Content className="Table-div">
@@ -51,46 +142,37 @@ function UserListComp() {
 
             <Column align="center" width={112}>
               <HeaderCell style={{ color: "red" }}>ID</HeaderCell>
-              <Cell dataKey="id"></Cell>
+              <EditableCell dataKey="id"></EditableCell>
             </Column>
 
             <Column width={112}>
               <HeaderCell style={{ color: "red" }}>Name</HeaderCell>
-              <Cell dataKey="name" onChange={handleChange}></Cell>
+              <EditableCell dataKey="name" onChange={handleChange}></EditableCell>
             </Column>
 
             <Column width={150}>
               <HeaderCell style={{ color: "red" }}>Email</HeaderCell>
-              <Cell dataKey="email" onChange={handleChange}></Cell>
+              <EditableCell dataKey="email" onChange={handleChange}></EditableCell>
             </Column>
 
             <Column width={150}>
               <HeaderCell style={{ color: "red" }}>Password</HeaderCell>
-              <Cell dataKey="password" onChange={handleChange}></Cell>
+              <EditableCell dataKey="password" onChange={handleChange}></EditableCell>
             </Column>
 
             <Column fixed="right" width={130}>
               <HeaderCell style={{ color: "red" }}>ACTION</HeaderCell>
               <Cell>
                 {(rowData) => {
-                  const SetEditStatus = () => {
-                    const newData = Object.assign([], userList);
-                    const activeRow = newData.find((user) => {
-                      if(user.id === rowData.id){
-                        return user ;
-                      }
-                    })
-                    console.log("activeRow = ",activeRow)
-                    console.log("Status = ",activeRow.status)
-                  }
                   return (
                     <span>
-                      <Button appearance="subtle" data-button-type={"edit"} onClick={SetEditStatus}>Edit</Button>
+                      <Button appearance="subtle" data-button-type={"edit"}>{rowData.status ? "Save" : "Edit"}</Button>
                       <Divider vertical />
                       <Button appearance="subtle" data-button-type={"remove"}>Remove</Button>
                     </span>
                   )
-                }}
+                } 
+                }
               </Cell>
             </Column>
             

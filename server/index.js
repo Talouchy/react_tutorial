@@ -40,6 +40,23 @@ app.post("/users", (req, res, next) => {
   console.log(Database.users);
 })
 
+// app.post("/updateusers", (req, res, next) => {
+
+//   var newUserList = req.body.NewUserList
+
+//   console.log("NewNameValue = ",NewNameValue)
+
+//   const UpdateUser = () => {
+//     var changingUser = Database.users.find((user) => {
+//       if(user.id == activeUserID ){
+//         return true
+//       }else {
+//         return false
+//       }
+//     })
+//   }
+// })
+
 app.post("/login", (req, res, next) => {
 
     var email = req.body.Email;
@@ -49,7 +66,7 @@ app.post("/login", (req, res, next) => {
       if(user.email == email){
         return true 
       }else {
-        return false;
+        return false
       }
     })
     console.log(foundUser);
@@ -79,11 +96,12 @@ app.post("/addbook", (req, res, next) => {
   var price = req.body.Price
   var author = req.body.Author
   var addedBooks = req.body.Books
+  var updatedUser = req.body.LoggedInUserID
   var lastBook = Database.books[Database.books.length - 1]
   var bookID = lastBook.id + 1
 
   Database.books.push({ id: bookID, name: name, pubDate: pubDate, price: price, author: author})
-  Database.users.push({ books: addedBooks })
+  Database.users[updatedUser].push({ books: books + addedBooks })
   console.log("New Book List is : " , Database.books)
   
   res.status(200).json({New_Book : name })

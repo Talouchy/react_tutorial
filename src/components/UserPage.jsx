@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Content, Table } from "rsuite";
+import { Alert, Content } from "rsuite";
 import { useHistory, useParams } from "react-router-dom";
-const { Column, HeaderCell, Cell } = Table;
 
 
 function UserPageComp() {

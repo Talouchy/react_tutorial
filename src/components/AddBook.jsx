@@ -7,7 +7,7 @@ function AddBookComp({logedInUser}){
     const [name, setname] = useState("");
     const [pubDate, setpubDate] = useState("");
     const [price, setprice] = useState("");
-    const [addedBooks, setaddedBooks] = useState(0)
+    const [addedBooks, setaddedBooks] = useState(1)
   
     const HandlePubDateChange = (value) => {
         setpubDate(value);
@@ -38,7 +38,8 @@ function AddBookComp({logedInUser}){
               Date: pubDate,
               Price: price,
               Author: logedInUser.name,
-              Books: addedBooks
+              Books: addedBooks,
+              LoggedInUserID : logedInUser.id
             })
         })
         .then((response) => {

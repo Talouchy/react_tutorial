@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button, Container, Content, Uploader } from "rsuite";
 
 function DashBoardComp( {logedInUser} ){
-
-  const [userList, setuserList] = useState({})
-  const url = "http://localhost:4000/users"
-
 
   return(
     <Container className="dashboard-container">
