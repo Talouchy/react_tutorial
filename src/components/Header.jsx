@@ -2,6 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Header, Icon, Navbar, Nav, Dropdown } from "rsuite";
 
+function MyNavBarItem({ to, eventkey, label, icon }) {
+  return(
+    <li className="rs-nav-item">
+      <Link className="rs-nav-item-content" to={to} style={{color:"white"}} eventkey={eventkey} ><Icon icon={icon}/>{label}</Link>
+    </li>
+  )
+}
+
 function HeaderComp({logedInUser}) {
 
   return (
@@ -17,34 +25,22 @@ function HeaderComp({logedInUser}) {
         </Navbar.Header>
         <Navbar.Body>
           <Nav>
-            <li className="rs-nav-item">
-              <Link className="rs-nav-item-content" to="/" style={{color:"white"}} eventkey="1" ><Icon icon="home" />Home</Link>
-            </li>
+              <MyNavBarItem to="/" eventkey="1" label="Home" icon="home"/>
             
-            { Object.keys(logedInUser).length > 0 ? <>
-              <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/dashboard" style={{color:"white"}} eventkey="2">Dashboard</Link>
-              </li>
-              </> : null}
-            
+            { Object.keys(logedInUser).length > 0 ?
+                <MyNavBarItem to="/dashboard" eventkey="2" label="Dashboard"/>
+              : null}
 
             { Object.keys(logedInUser) <= 0 ? 
-              <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/login" style={{color:"white"}} eventkey="3" >LogIn</Link>
-              </li> : null}      
+                <MyNavBarItem to="/login" eventkey="3" label="LogIn"/>
+              : null}      
 
             { Object.keys(logedInUser).length > 0 ? <> 
-              <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/users" style={{color:"white"}} eventkey="4">User List</Link>
-              </li>
+                <MyNavBarItem to="/users" eventkey="4" label="User List"/>
 
-              <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/books" style={{color:"white"}} eventkey="5">Book List</Link>
-              </li>
+                <MyNavBarItem to="/books" eventkey="5" label="Book List"/>
 
-              <li className="rs-nav-item">
-                <Link className="rs-nav-item-content" to="/addbook" style={{color:"white"}} eventkey="6">Add Book</Link>
-              </li>
+                <MyNavBarItem to="/addbook" eventkey="6" label="Add Book"/>
               </> : null }
             <Dropdown title="About Us" style={{color:"white"}} >
               <Dropdown.Item>About Us</Dropdown.Item>

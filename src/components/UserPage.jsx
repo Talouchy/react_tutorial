@@ -1,3 +1,4 @@
+ /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { Alert, Content } from "rsuite";
 import { useHistory, useParams } from "react-router-dom";

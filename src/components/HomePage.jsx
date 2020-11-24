@@ -30,7 +30,7 @@ function HomePageComp() {
           </div>
 
           <div className="Top-div-Left-h">
-            <PanelGroup accordion defaultActiveKey={1} shaded>
+            <PanelGroup accordion defaultActiveKey={1}>
               <Panel shaded eventKey={1}>
                 <h5 className="card-title">Quote of The Day :</h5>
                   <h6 className="Quotes">All that we see or seem is but a dream within a dream.</h6>
@@ -123,7 +123,7 @@ function HomePageComp() {
         
         <div className="Bottom-div">
           Bottom Div
-        {/* <PanelGroup accordion defaultActiveKey={1} bordered>
+        {/* <PanelGroup accordion defaultActiveKey={1}>
             <Panel header="Dev #1" eventKey={1} style={{color:"red"}}>
               <div className="bottom-div-panels">
                 <div>

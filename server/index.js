@@ -40,22 +40,36 @@ app.post("/users", (req, res, next) => {
   console.log(Database.users);
 })
 
-// app.post("/updateusers", (req, res, next) => {
+app.put("/updateusers", (req, res, next) => {
 
-//   var newUserList = req.body.NewUserList
+  var newUserData = req.body.UpdatedUser
 
-//   console.log("NewNameValue = ",NewNameValue)
+  if(!newUserData || Object.keys(newUserData).length <= 0){
+    res.status(400).json({ msg: "Failed Request!" })
+  }
 
-//   const UpdateUser = () => {
-//     var changingUser = Database.users.find((user) => {
-//       if(user.id == activeUserID ){
-//         return true
-//       }else {
-//         return false
-//       }
-//     })
-//   }
-// })
+  console.log("new User Data = ",newUserData)
+
+  var newDataBase = Database.users.map((user) => {
+    if(user.id === newUserData.id){
+      return {
+        id: user.id,
+        name: newUserData.name,
+        email: newUserData.email,
+        password: newUserData.password,
+        books: newUserData.books
+      };
+    }else {
+      return user;
+    }
+  })
+
+  Database.users = newDataBase;
+
+  console.log("New Data Base = ",Database.users)
+
+  return res.status(200).json({ msg : "Updated User !"})
+})
 
 app.post("/login", (req, res, next) => {
 

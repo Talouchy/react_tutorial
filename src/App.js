@@ -14,28 +14,11 @@ import DashBoardComp from "./components/DashBoard"
 import "./App.css";
 
 function App() {
-  const [formType, setFormType] = useState(false); // false: SignUp,   true: SignIn
   // const [logedInUser, setlogedInUser] = useState({}); 
   const [logedInUser, setlogedInUser] = useState({ name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123", books: 0 }); 
 
-  const styles = {
-    width: 300,
-    marginBottom: 10,
-  };
-
-  const ToggleForm = () => {
-    setFormType(!formType);
-  };
-
   const LogInUser = (user) => {
     setlogedInUser(user)
-  }
-
-  const ContentControler = () => {
-    if(Object.keys(logedInUser).length === 0){
-      return <SignInComp ToggleForm={ToggleForm} IconStyles={styles} LogInUser={LogInUser}/>
-    }else if(Object.keys(logedInUser).length > 0 ){
-    }
   }
 
   const isLoggedIn = Object.keys(logedInUser).length > 0 ;

@@ -15,7 +15,7 @@ function EditableCell({ onChange , ...props}) {
         <Input
         type="text"
         defaultValue = {props.rowData[props.dataKey]}
-        data-button-type={"input"}
+        data-element-type={"input"}
         onChange = {onInputChange}
         />
       </Cell>
@@ -69,33 +69,65 @@ function UserListComp() {
   
   const onRowClick = (row, event) => {
     console.log("Row Data : ", row)
-    var buttonType = event.target.getAttribute("data-button-type");
+
+    var buttonType = event.target.getAttribute("data-element-type");
+    const newUserList = Object.assign([], userList);
+    const activeRow = newUserList.find((user) => {
+      if(user.id === row.id){
+        return true 
+      }else {
+        return false 
+      }
+    })
 
     if(buttonType === null){
       history.push("/users/" + row.id)
       console.log("buttonType = ",buttonType)
-
-    }else if(buttonType === "edit"){
+    }
+      // Edit Button Function
+    
+    else if(buttonType === "edit"){
       console.log("buttonType = ",buttonType)
-
-      const newUserList = Object.assign([], userList);
-      const activeRow = newUserList.find((user) => {
-        if(user.id === row.id){
-          return true 
-        }else {
-          return false 
-        }
-      })
       
       if(activeRow.status) {
         activeRow.status = undefined ;
       }else {
         activeRow.status = "edit";
       }
-
+      
+      setuserList(newUserList)
       console.log("Active Row Status = ",activeRow.status)
 
-    }else if(buttonType === "remove"){
+    } 
+      // Save Button Function
+
+    else if( buttonType === "save"){
+
+      const url = "http://localhost:4000/updateusers"
+
+      fetch(url,{
+        method: "PUT",
+        headers:{
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+          UpdatedUser : row
+        })
+      })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Results are = ", result.msg)
+        if(activeRow.status){
+          activeRow.status = undefined
+        }
+        setuserList(newUserList)
+      })
+      .catch((error) => console.log("Errors are = ",error))
+
+    }
+      // Remove Button Function
+    
+    else if(buttonType === "remove"){
       console.log("buttonType = ",buttonType)
     }else if (buttonType === "input"){
       console.log("Button Type = ",buttonType)
@@ -112,27 +144,7 @@ function UserListComp() {
       setuserList(newUserList)
       console.log("ActiveRow ID = ",id)
       console.log("User[key] = ",user[key])
-
-  //     fetch(url,{
-  //       method: "POST",
-  //       headers:{
-  //         "Content-Type" : "application.json"
-  //       },
-  //       body: JSON.stringify({
-  //         NewUserList: newUserList,
-  //         NewValue: value
-  //       })
-  //     })
-  //     .then((response) => {
-  //       return response.json()
-  //     })
-  //     .then((result) => {
-  //       console.log("put results = ",result)
-  //     })
-  //     .catch((error) => {
-  //       console.log("PUT errors are = ",error)
-  //     })
-  // }
+  }
 
   return(
     <Content className="app-content">
@@ -166,9 +178,9 @@ function UserListComp() {
                 {(rowData) => {
                   return (
                     <span>
-                      <Button appearance="subtle" data-button-type={"edit"}>{rowData.status ? "Save" : "Edit"}</Button>
+                      <Button appearance="subtle" data-element-type={rowData.status ? "save" : "edit"}>{rowData.status ? "Save" : "Edit"}</Button>
                       <Divider vertical />
-                      <Button appearance="subtle" data-button-type={"remove"}>Remove</Button>
+                      <Button appearance="subtle" data-element-type={"remove"}>Remove</Button>
                     </span>
                   )
                 } 
