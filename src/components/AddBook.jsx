@@ -37,8 +37,7 @@ function AddBookComp({logedInUser}){
               Name: name,
               Date: pubDate,
               Price: price,
-              Author: logedInUser.name,
-              Books: addedBooks,
+              Creator: logedInUser.name,
               LoggedInUserID : logedInUser.id
             })
         })

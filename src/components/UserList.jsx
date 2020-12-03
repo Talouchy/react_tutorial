@@ -61,8 +61,8 @@ function UserListComp() {
       return response.json();
     })
     .then((result) => {
-      console.log("userL results are :",result.UserList);
-      setuserList(result.UserList);
+      console.log("userL results are :",result.users);
+      setuserList(result.users);
     })
     console.log("Mounted");
   },[])

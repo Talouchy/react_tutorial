@@ -1,7 +1,52 @@
 import React from "react";
-import { Button, Container, Content, Uploader } from "rsuite";
+import { useState } from "react";
+import { Button, Container, Content, Input, Uploader } from "rsuite";
 
 function DashBoardComp( {logedInUser} ){
+
+  const [isEditable,setisEditable] = useState(false)
+
+  function EditMode( {className, label, inpvalue, id}) {
+
+    const OnInputChange = (value) => {
+      console.log("value is = ",value)
+
+      var newLogedInUserInfo = Object.keys(logedInUser).map(key => {
+        return logedInUser[key] = value
+      });
+      logedInUser = newLogedInUserInfo
+      console.log("Loged In User = ",logedInUser)
+    }
+  
+    if(isEditable === true && !id){
+      return (
+        <Input
+          defaultValue={inpvalue}
+          onChange={OnInputChange}
+        />
+      )
+    }else{
+      return <div className={className} id={id}>{label} : {inpvalue} </div>
+    }
+  }
+
+  const setEditMode = () => {
+    setisEditable(!isEditable)
+
+    // if(isEditable == true){
+    //  fetch(url,{
+    //    method: "PUT",
+    //    headers: {
+    //      "Content-Type" : "application/json"
+    //    },
+    //    body: JSON.stringify({
+
+    //    })
+    //  }) 
+    // }
+  }
+
+  console.log("isEditable = ",isEditable)    // it gets called twice ,why ?
 
   return(
     <Container className="dashboard-container">
@@ -25,14 +70,14 @@ function DashBoardComp( {logedInUser} ){
           <div className="bottom-div-dashboard">
 
             <div className="top-div-bottom">
-              <Button className="edit-btn-dash">Edit</Button>
+              <Button className="edit-btn-dash" onClick={setEditMode}>{isEditable === true ? "Save" : "Edit"}</Button>
             </div>
 
             <div className="bottom-div-bottom">
-              <div className="div-text">Name : {logedInUser.name} </div>
-              <div className="div-text">Email : {logedInUser.email} </div>
-              <div className="bottom-inputs-dash">PassWord : {logedInUser.password} </div>
-              <div className="bottom-inputs-dash">Added Books : {logedInUser.books} </div>
+              <EditMode className="div-text" label="Name" inpvalue={logedInUser.name}/>
+              <EditMode className="div-text" label="Email" inpvalue={logedInUser.email}/>
+              <EditMode className="bottom-inputs-dash" label="PassWord" inpvalue={logedInUser.password}/>
+              <EditMode className="bottom-inputs-dash" id={"books"} label="Added Books" inpvalue={logedInUser.books}/>
             </div>
 
           </div>

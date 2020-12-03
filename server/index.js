@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const GetConnection = require("./db");
+const User = require("./models/Users");
+const Book = require("./models/Books");
+const { response } = require("express");
 
 const app = express();
 const PORT = 4000;
@@ -21,122 +25,144 @@ var Database = {
     ]
 }
 
-app.get("/users", (req, res, next) => {
-    res.status(200).json ({UserList : Database.users});
+app.get("/users",async (req, res, next) => {
+  
+  try {
+    var users = await User.getAll();
+    res.status(200).json ({users : users });
+  } catch (error) {
+    res.status(500).json ({error : "Internal Error"});
+  }
 });
 
-app.post("/users", (req, res, next) => {
+app.post("/users",async (req, res, next) => {
   
   var inpName = req.body.Name;
   var inpEmail = req.body.Email;
   var inpPass = req.body.Password;
-  var LastUser = Database.users[Database.users.length - 1]; 
-  var inpId = LastUser.id + 1;
 
-  Database.users.push({ name: inpName, id: inpId, email: inpEmail, password: inpPass});
-
-  res.status(200).json(Database.users);
-
-  console.log(Database.users);
+  try {
+    var user = await User.SignUp(inpName, inpEmail, inpPass);
+    res.status(200).json({user : user});
+  } catch (error) {
+    if(error.code === "ER_DUP_ENTRY"){
+      return res.status(400).json({error : "Duplicate Entry!"});
+    }else{
+      return res.status(500).json({error : "Internal Error!"});
+    }
+  }
 })
 
-app.put("/updateusers", (req, res, next) => {
+app.put("/updateusers",async (req, res, next) => {
 
   var newUserData = req.body.UpdatedUser
+  var {name: newName, email: newEmail, password: newPassword, id: newId} = newUserData
+
+  console.log("NEW VALUES = ",newName, newEmail, newPassword, newId)
 
   if(!newUserData || Object.keys(newUserData).length <= 0){
     res.status(400).json({ msg: "Failed Request!" })
   }
+  try {
+    var updatedUser = await User.UpdateUser(newName, newEmail, newPassword, newId);
+    // console.log("Updated User Stats = ",updatedUser)
+    return res.status(200).json({ user : updatedUser})
+  } catch (error) {
+    console.log("update Error = ",error)
+    return res.status(500).json({ msg : "Failed to Update User"})
+  }
 
   console.log("new User Data = ",newUserData)
 
-  var newDataBase = Database.users.map((user) => {
-    if(user.id === newUserData.id){
-      return {
-        id: user.id,
-        name: newUserData.name,
-        email: newUserData.email,
-        password: newUserData.password,
-        books: newUserData.books
-      };
-    }else {
-      return user;
-    }
-  })
+  // var newDataBase = Database.users.map((user) => {
+  //   if(user.id === newUserData.id){
+  //     return {
+  //       id: user.id,
+  //       name: newUserData.name,
+  //       email: newUserData.email,
+  //       password: newUserData.password,
+  //       books: newUserData.books
+  //     };
+  //   }else {
+  //     return user;
+  //   }
+  // })
 
   Database.users = newDataBase;
 
-  console.log("New Data Base = ",Database.users)
-
-  return res.status(200).json({ msg : "Updated User !"})
+  
 })
 
-app.post("/login", (req, res, next) => {
+app.post("/login",async (req, res, next) => {
 
-    var email = req.body.Email;
-    var pass = req.body.Password;
+  var email = req.body.Email;
+  var pass = req.body.Password;
 
-    var foundUser = Database.users.find((user) => {
-      if(user.email == email){
-        return true 
-      }else {
-        return false
-      }
-    })
-    console.log(foundUser);
+  try {
+    var logedInUser = await User.LogIn(email, pass)
+    console.log("Loged In User is = ",logedInUser)
+    res.status(200).json({User : logedInUser})
+  } catch (error) {
+    res.status(500).json({error : "Internal Error"})
+    console.log("log in Error = ",error)
+  }
 
-    if(foundUser == undefined){
-      res.status(404).json({error : "wrong email"})
-    }else{
-      if(foundUser.password == pass){
-        res.status(200).json({user : foundUser});
-      }else{
-        res.status(404).json({error : "Wrong Pass"})
-      }
-    }
+  // if(foundUser == undefined){
+  //   res.status(404).json({error : "wrong email"})
+  // }else{
+  //   if(foundUser.password == pass){
+  //     res.status(200).json({user : foundUser});
+  //   }else{
+  //     res.status(404).json({error : "Wrong Pass"})
+  //   }
+  // }
 
-  });
+});
     
-app.get("/books", (req, res, next) => {
+app.get("/books", async(req, res, next) => {
+  try {
+    var books = await Book.getAll();
+    console.log("/books results = ",books)
+    res.status(200).json({books : books})
+  } catch (error) {
+    res.status(500).json({error : "Internal Error"})
+  }
   console.log("books rout")
-  res.status(200).json({BookList : Database.books})
 })
 
-app.post("/addbook", (req, res, next) => {
+app.post("/addbook", async(req, res, next) => {
   console.log("rout reached")
 
   var name = req.body.Name
   var pubDate = req.body.Date
   var price = req.body.Price
-  var author = req.body.Author
+  var creator = req.body.Creator
   var addedBooks = req.body.Books
   var updatedUser = req.body.LoggedInUserID
-  var lastBook = Database.books[Database.books.length - 1]
-  var bookID = lastBook.id + 1
 
-  Database.books.push({ id: bookID, name: name, pubDate: pubDate, price: price, author: author})
-  Database.users[updatedUser].push({ books: books + addedBooks })
-  console.log("New Book List is : " , Database.books)
-  
-  res.status(200).json({New_Book : name })
+  try {
+    var addedBook = await Book.AddOne(name, pubDate, price, creator);
+    res.status(200).json({New_Book : addedBook })
+    console.log("Added Book = ",addedBook)
+  } catch (error) {
+    res.status(500).json({error : "Internal Error" })
+    console.error("AddBook Error = ",error)
+  }
 })
 
-app.get("/users/:userID", (req, res, next) => {
+app.get("/users/:userID", async(req, res, next) => {
   var userID = Number(req.params.userID) ;
 
-  var foundUser = Database.users.find((user) => {
-    if(user.id === userID){
-      return true ;
-    }else {
-      return false ;
+  try {
+    var user = await User.getOneById(userID);
+    return res.status(200).json({ user : user})
+  } catch (error) {
+    if(error.message === "User Not Found!"){
+      return res.status(500).json({ error : error.message})
+    }else{
+      return res.status(500).json({ error : "Internal Error!"})
     }
-  });
-  
-    if(foundUser){
-      res.status(200).json({ user : foundUser})
-    }else {
-      res.status(404).json({ error : "User Not Found"})
-    }
+  }
 });
 
 app.listen(PORT, () => {

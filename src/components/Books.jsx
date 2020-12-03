@@ -15,7 +15,7 @@ function BooksComp() {
       return response.json();
     })
     .then((result) => {
-      setbookList(result.BookList);
+      setbookList(result.books);
     })
   },[])
 
@@ -46,8 +46,8 @@ function BooksComp() {
               </Column>
 
               <Column width={112}>
-                <HeaderCell style={{color : "red"}}>Author</HeaderCell>
-                <Cell dataKey="author"></Cell>
+                <HeaderCell style={{color : "red"}}>Creator</HeaderCell>
+                <Cell dataKey="creator"></Cell>
               </Column>
 
             </Table>
