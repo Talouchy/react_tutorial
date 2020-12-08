@@ -41,6 +41,8 @@ function HeaderComp({logedInUser}) {
                 <MyNavBarItem to="/books" eventkey="5" label="Book List"/>
 
                 <MyNavBarItem to="/addbook" eventkey="6" label="Add Book"/>
+
+                <MyNavBarItem to="/chat" eventkey="7" label="Chat"/>
               </> : null }
             <Dropdown title="About Us" style={{color:"white"}} >
               <Dropdown.Item>About Us</Dropdown.Item>

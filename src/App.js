@@ -11,6 +11,7 @@ import AddBookComp from "./components/AddBook"
 import UserPageComp from "./components/UserPage"
 import HomePageComp from "./components/HomePage"
 import DashBoardComp from "./components/DashBoard"
+import ChatComp from "./components/Chat"
 import "./App.css";
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
 
             <Route path="/dashboard">
               { isLoggedIn ? <DashBoardComp logedInUser={logedInUser}/> : <Redirect to="/login"/> }
+            </Route>
+
+            <Route path="/chat">
+              { isLoggedIn ? <ChatComp logedInUser={logedInUser}/> : <Redirect to="/login"/> }
             </Route>
 
             <Route path="/users/:id">

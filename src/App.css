@@ -462,6 +462,49 @@
   color: white;
 }
 
+/* Chat Comp Styles */
+
+.app-content .chat-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: rgb(180, 60, 60) 0.4px 0.4px 6px;
+  height: 300px;
+  width: 250px;
+}
+
+.Action-sec{
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  grid-gap: 3px;
+}
+
+#chat-send-btn {
+  color: red;
+  border-color: rgb(180, 60, 60);
+}
+
+#chat-send-btn:hover {
+  border-color: black;
+  color: black;
+}
+
+#chat-inp {
+  border: 0px;
+  border-bottom: 1px solid rgb(180, 60, 60);
+  border-radius: 0px;
+}
+
+.msg-div {
+  margin: 10px;
+  border-left: 1px solid rgb(180, 60, 60);
+  padding-left: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

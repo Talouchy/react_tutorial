@@ -168,3 +168,34 @@ app.get("/users/:userID", async(req, res, next) => {
 app.listen(PORT, () => {
     console.log("server is listening on port ", PORT);
 });
+
+// WEBSOCKET 
+
+const WS = require('ws')
+
+const mainWebSocket = new WS.Server({port : 8080})
+
+mainWebSocket.on("connection", (ws) => {   //what is this ws ?
+  console.log("WebSocket Connected")
+
+  ws.on("message", (message) => {
+    console.log(`Client Said : ${message}`)
+    switch(message){
+      case "hello":
+        ws.send("Hey There !")
+        break;
+
+      case "how are you ?":
+        ws.send("Fine !")
+        break;
+
+      case "wassup":
+        ws.send("Not Much !")
+        break;
+
+      default:
+        ws.send("I Cant Understand")
+        break;
+    }
+  })
+})
