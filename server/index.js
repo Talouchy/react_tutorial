@@ -12,18 +12,6 @@ const PORT = 4000;
 app.use(cors());
 app.use(bodyParser.json());
 
-var Database = {
-    users : [
-      { name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123", books: 0 },
-      { name:"Danny", id: 2, email: "danny@gmail.com" , password: "456", books: 0 },
-      { name:"Amir", id: 3, email: "amir@gmail.com", password: "789", books: 0 }
-    ],
-    books : [
-      { id: 1, name:"JungleBook", pubDate:"1980", price:"10$", author:""},
-      { id: 2, name:"TinTin", pubDate:"1990", price:"20$", author:""},
-      { id: 3, name:"HarryPotter", pubDate:"2000", price:"30$", author:""}
-    ]
-}
 
 app.get("/users",async (req, res, next) => {
   
@@ -53,6 +41,41 @@ app.post("/users",async (req, res, next) => {
   }
 })
 
+app.get("/fetchUsers", async(req, res, next) => {
+
+  var clientKeys = Object.keys(CLIENTS)
+  try {
+    var connectedClients = await User.FindUsersByID(clientKeys)
+    console.log("Connected Clients = ",connectedClients)
+    res.status(200).json({ connectedClients : connectedClients })
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
+})
+
+app.post("/removeuser", (req, res, next) => {
+  var userToRemove = req.body.userToRemove
+  var onlineClientsIds = Object.keys(CLIENTS)
+  var onlineClientsLength = Object.keys(CLIENTS).length
+
+  if(CLIENTS[userToRemove.id]){
+    delete CLIENTS[userToRemove.id];
+  }
+  console.log("NEW CLIENTS = ",Object.keys(CLIENTS))
+
+  res.status(200).json({ newClientsArr: CLIENTS })
+})
+
+app.get("/resetclients", (req, res, next) => {
+
+  try {
+    CLIENTS = {}
+    res.status(200).json({ clients: CLIENTS})
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
+})
+
 app.put("/updateusers",async (req, res, next) => {
 
   var newUserData = req.body.UpdatedUser
@@ -71,26 +94,6 @@ app.put("/updateusers",async (req, res, next) => {
     console.log("update Error = ",error)
     return res.status(500).json({ msg : "Failed to Update User"})
   }
-
-  console.log("new User Data = ",newUserData)
-
-  // var newDataBase = Database.users.map((user) => {
-  //   if(user.id === newUserData.id){
-  //     return {
-  //       id: user.id,
-  //       name: newUserData.name,
-  //       email: newUserData.email,
-  //       password: newUserData.password,
-  //       books: newUserData.books
-  //     };
-  //   }else {
-  //     return user;
-  //   }
-  // })
-
-  Database.users = newDataBase;
-
-  
 })
 
 app.post("/login",async (req, res, next) => {
@@ -100,23 +103,11 @@ app.post("/login",async (req, res, next) => {
 
   try {
     var logedInUser = await User.LogIn(email, pass)
-    console.log("Loged In User is = ",logedInUser)
-    res.status(200).json({User : logedInUser})
+    res.status(200).json({user : logedInUser})
   } catch (error) {
     res.status(500).json({error : "Internal Error"})
     console.log("log in Error = ",error)
   }
-
-  // if(foundUser == undefined){
-  //   res.status(404).json({error : "wrong email"})
-  // }else{
-  //   if(foundUser.password == pass){
-  //     res.status(200).json({user : foundUser});
-  //   }else{
-  //     res.status(404).json({error : "Wrong Pass"})
-  //   }
-  // }
-
 });
     
 app.get("/books", async(req, res, next) => {
@@ -169,33 +160,74 @@ app.listen(PORT, () => {
     console.log("server is listening on port ", PORT);
 });
 
-// WEBSOCKET 
+// WEBSOCKET   
 
-const WS = require('ws')
+  // Message Function
+
+  const ParseJson = (string) => {
+    let result = {};
+    try {
+      result = JSON.parse(string);          // ASK !
+    } catch (error) {
+      result = {error};
+    }
+    return result;
+  }
+
+const WS = require('ws');
+const { json } = require("body-parser");
 
 const mainWebSocket = new WS.Server({port : 8080})
+
+var CLIENTS = {};   // todo : take client of the list is he gets out of the chat page
 
 mainWebSocket.on("connection", (ws) => {   //what is this ws ?
   console.log("WebSocket Connected")
 
+  var readyState = ws.readyState
+
   ws.on("message", (message) => {
-    console.log(`Client Said : ${message}`)
-    switch(message){
-      case "hello":
-        ws.send("Hey There !")
-        break;
+    var msgObj = ParseJson(message)
 
-      case "how are you ?":
-        ws.send("Fine !")
-        break;
+    /* 
+    {
+      action: enum{"INIT", "SEND", "INCOMING", "EDIT", "Delet"},
+      payload: {}
+    }
+    */
 
-      case "wassup":
-        ws.send("Not Much !")
-        break;
+    if(msgObj.error){
+      ws.send("msgObj ERROR")
+    }else{
+      switch(msgObj.action){
 
-      default:
-        ws.send("I Cant Understand")
-        break;
+        case "INIT":
+          var { id: userId } = msgObj.payload;
+          CLIENTS[userId] = ws;
+          clientKeys = Object.keys(CLIENTS)
+          console.log("ReadyState = ",readyState)
+          console.log(`Client ${userId} Connected | CLIENTS size = ${Object.keys(CLIENTS).length} | CLIENTS Keys = ${Object.keys(CLIENTS)}`)
+
+          ws.send(JSON.stringify({action: "INIT", payload:{ status: true, message: "You Are Connected", from: "Server" }}))
+          break;
+        
+        case "SEND":
+          var { from, to, message } = msgObj.payload;    //why do we have to declare payload here ? dont we already know it ?
+          let toWS = CLIENTS[to];
+          if(toWS){
+            console.log("Ready State = ",readyState)
+            toWS.send(JSON.stringify({ action: "INCOMING", payload : { from: from, message: message }}))
+            ws.send(JSON.stringify({ action: "SEND", status: true }))
+          }else{
+            console.log("Ready State = ",readyState)
+            ws.send(JSON.stringify({ action: "SEND", status: false, message: "User Not Online" }))
+          }
+          break;
+      }
     }
   })
+
+  // ws.on("close", () => {
+  //   CLIENTS = {}
+  // })
 })

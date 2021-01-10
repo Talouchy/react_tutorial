@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Content, Table, Button, Divider, Input, Popover, Whisper } from "rsuite";
+import { Content, Table, Button, Divider, Input } from "rsuite";
 import { useHistory } from "react-router-dom";
 const { Column, HeaderCell, Cell } = Table;
 
@@ -24,29 +24,6 @@ function EditableCell({ onChange , ...props}) {
     return <Cell {...props}/>
   }
 }
-
-// Pop Over
-
-  const Speaker = ({ content, ...props }) => {
-    return (
-      <Popover title="Title" {...props}>
-        <p>This is a Popover </p>
-        <p>{content}</p>
-      </Popover>
-    )
-  }
-
-  const PopOverElement = ({ placement, rowData }) => (
-    <Whisper
-      trigger="click"
-      placement={placement}
-      speaker={<Speaker content={`I am positioned to the ${placement}`} />}
-    >
-      <Button appearance="subtle" data-button-type={"edit"}>{rowData.status ? "Save" : "Edit"}</Button>
-    </Whisper>
-  );
-
-// end of pop over
 
 function UserListComp() {
   const history = useHistory();

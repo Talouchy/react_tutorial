@@ -15,8 +15,8 @@ import ChatComp from "./components/Chat"
 import "./App.css";
 
 function App() {
-  // const [logedInUser, setlogedInUser] = useState({}); 
-  const [logedInUser, setlogedInUser] = useState({ name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123", books: 0 }); 
+  const [logedInUser, setlogedInUser] = useState({}); 
+  // const [logedInUser, setlogedInUser] = useState({ name:"Pooyan", id: 1, email: "pooyan@gmail.com" , password: "123", books: 0 }); 
 
   const LogInUser = (user) => {
     setlogedInUser(user)

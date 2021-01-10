@@ -23,7 +23,6 @@ User.getAll = function(){
       console.log(users[0].name, users[0].nameLength())  // doesnt give the rightr answer
       resolve(users);
     } catch (error) {
-      conn.release();
       reject(error)
     }
   })
@@ -93,7 +92,21 @@ User.LogIn = function(email, pass){
       var result = await conn.query(`SELECT * FROM ${TBL_Users} WHERE email=? AND password=?`,[email, pass])
       var foundUser = result[0][0]
       conn.release();
-      resolve(foundUser);
+      resolve(new User(foundUser));
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+User.FindUsersByID = function(IDs){
+  return new Promise(async (resolve, reject) => {
+    try {
+      const conn = await GetConnection();
+      var result = await conn.query(`SELECT * FROM ${TBL_Users} WHERE id IN (?)`,[IDs])
+      var foundusers = result[0].map((res) => new User(res))
+      conn.release();
+      resolve(foundusers)
     } catch (error) {
       reject(error)
     }

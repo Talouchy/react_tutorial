@@ -464,13 +464,23 @@
 
 /* Chat Comp Styles */
 
-.app-content .chat-container {
+.app-content-chat {
+  display: grid;
+  place-content: center;
+  grid-template-columns: max-content 250px;
+  grid-gap: 5px;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.app-content-chat .chat-container {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr max-content;
   border: 1px solid red;
   border-radius: 5px;
   padding: 10px;
+  margin: 10px;
   box-shadow: rgb(180, 60, 60) 0.4px 0.4px 6px;
   height: 300px;
   width: 250px;
@@ -504,6 +514,29 @@
   padding-left: 5px;
   border-bottom-left-radius: 5px;
 }
+
+.contacts-table {
+  display: grid;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid rgb(180, 60, 60);
+  border-radius: 5px;
+}
+
+.contacts-list {
+  display: grid;
+  margin-top: 100px;
+  grid-template-rows: max-content max-content;
+}
+
+.chosen-client {
+  border: 1px solid rgb(180, 60, 60);
+  border-radius: 10px;
+  width: max-content;
+  padding: 7px;
+  margin-left: 100px;
+}
+
 
 @keyframes App-logo-spin {
   from {
