@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
+import { Container, Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
 import { Link, useHistory } from "react-router-dom";
 import "rsuite/dist/styles/rsuite-default.css";
 
@@ -60,7 +60,7 @@ function SignInComp({ LogInUser }) {
   }
 
   return (
-    <Content className="app-content">
+    <Container className="app-content">
       <Content className="form-signin">
         <div className="left-div-signin">
           <img
@@ -118,7 +118,7 @@ function SignInComp({ LogInUser }) {
           </div>
         </div>
       </Content>
-    </Content>
+    </Container>
   );
 }
 

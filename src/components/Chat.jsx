@@ -16,15 +16,14 @@ const ParseJson = (string) => {
 function ChatComp({logedInUser: user}) {
 
   const [message, setmessage] = useState("");
-  const [messages, setmessages] = useState([]);
+  const [messages, setmessages] = useState(["FIRST"]);
   const [onlineClients, setonlineClients] = useState([]);
-  const [activeClient, setactiveClient] = useState(1)
-  const [activeClientToShow, setactiveClientToShow] = useState("")
+  const [activeClient, setactiveClient] = useState({})
 
   var webSocket = useRef(null);
 
   useEffect(() => {
-    console.log("Mounted");
+    
 
     webSocket.current = new WebSocket("ws://localhost:8080");           //ask
     webSocket.current.onopen = onOpen; 
@@ -40,8 +39,8 @@ function ChatComp({logedInUser: user}) {
   },[])
 
   useEffect(() => {
-    console.log("Mounted Again")
-  },[activeClient])
+    console.log("Messages = ", messages)
+  },[messages])
 
   const onClose = () => {
     var url = "http://localhost:4000/resetclients"
@@ -56,7 +55,7 @@ function ChatComp({logedInUser: user}) {
       return response.json();
     })
     .then((result) => {
-      console.log("Reset Users Results = ",result)
+      
     })
   }
 
@@ -77,7 +76,7 @@ function ChatComp({logedInUser: user}) {
       return response.json();
     })
     .then((res) => {
-      console.log("Response = ",res.newClientsArr)
+      
     })
   }
 
@@ -90,7 +89,7 @@ function ChatComp({logedInUser: user}) {
   }
 
   const onMessage = (message) => {
-    console.log("Incoming Message is = ", message)
+    
     var msgObj = ParseJson(message.data);
 
     switch(msgObj.action){
@@ -110,7 +109,7 @@ function ChatComp({logedInUser: user}) {
             return response.json();
           })
           .then((result) => {
-            console.log("Fetch Clients Results = ",result.connectedClients)
+            
             setonlineClients(result.connectedClients)
           })
           Alert.success(msgObj.payload.message, 2000)
@@ -118,8 +117,10 @@ function ChatComp({logedInUser: user}) {
           Alert.error("Couldn't Connect To Chat", 2000)
         }
         break;
+        
       case "INCOMING":
         var {message: incomingMessage} = msgObj.payload
+        console.log("INCOMING MSG = ",incomingMessage)
         setmessages([...messages, incomingMessage])
         break;
     }
@@ -130,15 +131,13 @@ function ChatComp({logedInUser: user}) {
   }
 
   const SendMessage = () => {
-    webSocket.current.send(JSON.stringify({ action: "SEND", payload: { from: user.id, to: {activeClient}, message: message} }))    //why jason ?
+    webSocket.current.send(JSON.stringify({ action: "SEND", payload: { from: user.id, to: activeClient.id, message: message} }))    //why jason ?
     setmessages([...messages, message])
     setmessage("")
-    console.log("Messages Are = ",messages)
   }
 
   const SelectClient = (row) => {
-    setactiveClient(row.id)
-    setactiveClientToShow(row.name)
+    setactiveClient(row)
   }
   
   return(
@@ -154,7 +153,7 @@ function ChatComp({logedInUser: user}) {
 
       <div className="contacts-list">
 
-        <div className="chosen-client">{activeClientToShow}</div>
+        <div className="chosen-client">{activeClient.name}</div>
 
         <div>
           <Table data={onlineClients} className="contacts-table" height={100} onRowClick={SelectClient}>

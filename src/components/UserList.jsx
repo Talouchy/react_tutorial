@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Content, Table, Button, Divider, Input } from "rsuite";
+import { Container, Content, Table, Button, Divider, Input } from "rsuite";
 import { useHistory } from "react-router-dom";
 const { Column, HeaderCell, Cell } = Table;
 
@@ -124,7 +124,7 @@ function UserListComp() {
   }
 
   return(
-    <Content className="app-content">
+    <Container className="app-content">
       <Content className="Table-div">
         <div className="main-div">
           <Table data={userList} height={300} onRowClick={onRowClick}>
@@ -168,7 +168,7 @@ function UserListComp() {
           </Table>
         </div>
       </Content>
-    </Content>
+    </Container>
   )
 }
 

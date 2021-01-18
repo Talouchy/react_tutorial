@@ -88,7 +88,6 @@ app.put("/updateusers",async (req, res, next) => {
   }
   try {
     var updatedUser = await User.UpdateUser(newName, newEmail, newPassword, newId);
-    // console.log("Updated User Stats = ",updatedUser)
     return res.status(200).json({ user : updatedUser})
   } catch (error) {
     console.log("update Error = ",error)
@@ -167,7 +166,7 @@ app.listen(PORT, () => {
   const ParseJson = (string) => {
     let result = {};
     try {
-      result = JSON.parse(string);          // ASK !
+      result = JSON.parse(string);
     } catch (error) {
       result = {error};
     }
@@ -179,9 +178,9 @@ const { json } = require("body-parser");
 
 const mainWebSocket = new WS.Server({port : 8080})
 
-var CLIENTS = {};   // todo : take client of the list is he gets out of the chat page
+var CLIENTS = {};
 
-mainWebSocket.on("connection", (ws) => {   //what is this ws ?
+mainWebSocket.on("connection", (ws) => {   
   console.log("WebSocket Connected")
 
   var readyState = ws.readyState
@@ -212,7 +211,7 @@ mainWebSocket.on("connection", (ws) => {   //what is this ws ?
           break;
         
         case "SEND":
-          var { from, to, message } = msgObj.payload;    //why do we have to declare payload here ? dont we already know it ?
+          var { from, to, message } = msgObj.payload;
           let toWS = CLIENTS[to];
           if(toWS){
             console.log("Ready State = ",readyState)
@@ -226,8 +225,4 @@ mainWebSocket.on("connection", (ws) => {   //what is this ws ?
       }
     }
   })
-
-  // ws.on("close", () => {
-  //   CLIENTS = {}
-  // })
 })

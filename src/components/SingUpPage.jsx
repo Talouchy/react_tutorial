@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
+import { Container, Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 import { Link } from "react-router-dom";
 
 
@@ -53,7 +53,7 @@ function SingUpComp({ ToggleForm }) {
   }
 
   return (
-    <Content className="app-content">
+    <Container className="app-content">
       <Content className="form-signup">
         <div className="signup-left-div">
           <div className="left-top-div">
@@ -140,7 +140,7 @@ function SingUpComp({ ToggleForm }) {
           </Link>
         </div>
       </Content>
-    </Content>
+    </Container>
   );
 }
 

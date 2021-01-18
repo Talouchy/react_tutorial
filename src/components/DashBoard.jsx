@@ -46,7 +46,7 @@ function DashBoardComp( {logedInUser} ){
     // }
   }
 
-  console.log("isEditable = ",isEditable)    // it gets called twice ,why ?
+  console.log("isEditable = ",isEditable)
 
   return(
     <Container className="dashboard-container">

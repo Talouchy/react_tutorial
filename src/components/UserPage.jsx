@@ -33,14 +33,14 @@ function UserPageComp() {
   },[])
 
   return(
-    <Content className="app-content">
+    <Container className="app-content">
       <Content className="User-div">
         <div className="">ID : { user.id || "unknown"}  </div>
         <div className="User-Info-div">Name : { user.name || "unknown"}  </div>
         <div className="User-Info-div">Email : { user.email || "unknown"}  </div>
         <div className="User-Info-div">Password : { user.password || "unknown"}  </div>
       </Content>
-    </Content>
+    </Container>
   )
 }
 
