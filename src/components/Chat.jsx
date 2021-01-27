@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { Content, Button, Input, Alert, Table } from "rsuite";
-import { useState } from "react";
+import React, { useEffect, useRef, useState, useReducer } from "react";
+import { Content, Button, Input, Alert, Table, Avatar } from "rsuite";
 const { Column, HeaderCell, Cell } = Table;
 
 const ParseJson = (string) => {
@@ -13,10 +12,31 @@ const ParseJson = (string) => {
   return result;
 }
 
+const initialMessagesVal = [];
+
+const messagesReducer = (messages, action) => {
+  switch(action.type){
+
+    case "InsertMSG":
+      return [...messages, action.message];
+
+    case "ClearMSGS":
+      return [];
+
+    default:
+      return messages;
+
+  }
+}
+
+// function MsgElement(){
+//   return <div>{messages.map((msg, i) => <div className={} key={i} from={user} to={activeClient.id}>{msg}</div>)}</div>
+// }
+
 function ChatComp({logedInUser: user}) {
 
   const [message, setmessage] = useState("");
-  const [messages, setmessages] = useState(["FIRST"]);
+  const [messages, dispatch] = useReducer(messagesReducer, initialMessagesVal)
   const [onlineClients, setonlineClients] = useState([]);
   const [activeClient, setactiveClient] = useState({})
 
@@ -97,7 +117,7 @@ function ChatComp({logedInUser: user}) {
       case "INIT":
         if(msgObj.payload.status){
           var url = "http://localhost:4000/fetchUsers"
-          var { status , msg , from, clientKeys } = msgObj.payload
+          var { status , msg , sender, clientKeys } = msgObj.payload
 
           fetch(url,{
             method: "GET",
@@ -119,9 +139,8 @@ function ChatComp({logedInUser: user}) {
         break;
         
       case "INCOMING":
-        var {message: incomingMessage} = msgObj.payload
-        console.log("INCOMING MSG = ",incomingMessage)
-        setmessages([...messages, incomingMessage])
+        var {message: incomingMessage, sender, receiver} = msgObj.payload
+        dispatch({ type: "InsertMSG", message: incomingMessage })
         break;
     }
   }
@@ -131,42 +150,53 @@ function ChatComp({logedInUser: user}) {
   }
 
   const SendMessage = () => {
-    webSocket.current.send(JSON.stringify({ action: "SEND", payload: { from: user.id, to: activeClient.id, message: message} }))    //why jason ?
-    setmessages([...messages, message])
+    webSocket.current.send(JSON.stringify({ action: "SEND", payload: { sender: user.id, receiver: activeClient.id, message: message} }))    //why jason ?
+    dispatch({ type: "InsertMSG", message })
     setmessage("")
   }
 
-  const SelectClient = (row) => {
-    setactiveClient(row)
+  const OpenChat = (client) => {
+    setactiveClient(client)
   }
-  
+
   return(
     <Content className="app-content-chat">
 
-      <div className="chat-container">
-        <div>{messages.map((msg, i) => <div key={i} className="msg-div">{msg}</div>)}</div>
-        <div className="Action-sec">
-          <Input id="chat-inp" type="text" value={message} onChange={HandleMsgChange}/>
-          <Button id="chat-send-btn" appearance="ghost" onClick={SendMessage}>Send</Button>
+      <div className="chat-main-div">
+
+        <div className="chat-left-div">
+          <div className="selected-client">{
+            <div>
+              <Avatar>{ Object.keys(activeClient).length && activeClient.name ? activeClient.name.substring(0, 1) : null}</Avatar>
+              <span style={{marginLeft: "5px"}}>{activeClient.name}</span>
+            </div>
+          }</div>
+          
+          <div className="msg-sec">
+            <div>{messages.map((msg, i) => <div key={i}>{msg}</div>)}</div>
+            <div className="Action-sec">
+              <Input id="chat-inp" type="text" value={message} onChange={HandleMsgChange}/>
+              <Button id="chat-send-btn" appearance="ghost" onClick={SendMessage}>Send</Button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="contacts-list">
-
-        <div className="chosen-client">{activeClient.name}</div>
-
-        <div>
-          <Table data={onlineClients} className="contacts-table" height={100} onRowClick={SelectClient}>
-            <Column>
-              <HeaderCell>ID</HeaderCell>
-              <Cell dataKey="id"></Cell>
-            </Column>
-
-            <Column>
-              <HeaderCell>Contacts</HeaderCell>
-              <Cell dataKey="name"></Cell>
-            </Column>
-          </Table>
+        <div className="chat-right-div">
+          <div className="loged-in-user">{
+            <div>
+              <Avatar>{user.name.substring(0, 1)}</Avatar>
+              <span style={{marginLeft: "5px"}}>{user.name}</span>
+            </div>
+          }</div>
+          
+          <div className="clients-list">{onlineClients.map(client => {
+            return (
+              <div className="onlineclient-item" key={`user_${client.id}`} id={`user_${client.id}`} onClick={() => OpenChat(client)}>
+                <Avatar>{client.name.substring(0, 1)}</Avatar>
+                <span style={{marginLeft: "5px"}}>{client.name}</span>
+              </div>
+            )
+          })}</div>
         </div>
         
       </div>

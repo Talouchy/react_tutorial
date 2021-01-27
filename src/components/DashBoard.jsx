@@ -2,20 +2,18 @@ import React from "react";
 import { useState } from "react";
 import { Button, Container, Content, Input, Uploader } from "rsuite";
 
-function DashBoardComp( {logedInUser} ){
+function DashBoardComp( {logedInUser, setlogedInUser} ){
 
   const [isEditable,setisEditable] = useState(false)
 
-  function EditMode( {className, label, inpvalue, id}) {
+  function EditMode( {className, label, inpvalue, id, inpkey}) {
 
     const OnInputChange = (value) => {
       console.log("value is = ",value)
 
-      var newLogedInUserInfo = Object.keys(logedInUser).map(key => {
-        return logedInUser[key] = value
-      });
-      logedInUser = newLogedInUserInfo
-      console.log("Loged In User = ",logedInUser)
+      let newLogedInUserInfo = logedInUser
+      newLogedInUserInfo[inpkey] = value
+      setlogedInUser(newLogedInUserInfo)
     }
   
     if(isEditable === true && !id){
@@ -74,7 +72,7 @@ function DashBoardComp( {logedInUser} ){
             </div>
 
             <div className="bottom-div-bottom">
-              <EditMode className="div-text" label="Name" inpvalue={logedInUser.name}/>
+              <EditMode className="div-text" label="Name" inpvalue={logedInUser.name} inpkey={`name`}/>
               <EditMode className="div-text" label="Email" inpvalue={logedInUser.email}/>
               <EditMode className="bottom-inputs-dash" label="PassWord" inpvalue={logedInUser.password}/>
               <EditMode className="bottom-inputs-dash" id={"books"} label="Added Books" inpvalue={logedInUser.books}/>

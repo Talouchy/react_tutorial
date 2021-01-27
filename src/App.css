@@ -467,29 +467,63 @@
 .app-content-chat {
   display: grid;
   place-content: center;
-  grid-template-columns: max-content 250px;
-  grid-gap: 5px;
   height: 100vh;
   background-color: rgb(255, 255, 255);
 }
 
-.app-content-chat .chat-container {
+.chat-main-div {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr max-content;
-  border: 1px solid red;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  box-shadow: rgb(180, 60, 60) 0.4px 0.4px 6px;
-  height: 300px;
-  width: 250px;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid rgb(148, 35, 35);
+  height: 350px;
+  width: 492px;
+  padding: 5px;
 }
 
-.Action-sec{
+.chat-left-div {
+  display: grid;
+  grid-template-rows: 50px 1fr max-content;
+  border: 1px solid rgb(148, 35, 35);
+  width: 310px;
+}
+
+.chat-left-div .right {
+  text-align: right;
+}
+
+.chat-right-div {
+  display: grid;
+  grid-template-rows: 51px 1fr;
+  width: 170px;
+}
+
+.msg-sec {
+  display: grid;
+  grid-template-rows: 1fr max-content;
+}
+
+.Action-sec {
   display: grid;
   grid-template-columns: 1fr max-content;
-  grid-gap: 3px;
+  padding: 5px;
+}
+
+.selected-client {
+  border-bottom: 1px solid black;
+  padding: 5px;
+}
+
+.loged-in-user {
+  border: 1px solid rgb(148, 35, 35);
+  border-left: 0px;
+  padding: 5px;
+}
+
+.clients-list {
+  border: 1px solid rgb(148, 35, 35);
+  border-left: 0px;
+  border-top: 0px;
+  padding: 5px;
 }
 
 #chat-send-btn {
@@ -506,35 +540,6 @@
   border: 0px;
   border-bottom: 1px solid rgb(180, 60, 60);
   border-radius: 0px;
-}
-
-.msg-div {
-  margin: 10px;
-  border-left: 1px solid rgb(180, 60, 60);
-  padding-left: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.contacts-table {
-  display: grid;
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid rgb(180, 60, 60);
-  border-radius: 5px;
-}
-
-.contacts-list {
-  display: grid;
-  margin-top: 100px;
-  grid-template-rows: max-content max-content;
-}
-
-.chosen-client {
-  border: 1px solid rgb(180, 60, 60);
-  border-radius: 10px;
-  width: max-content;
-  padding: 7px;
-  margin-left: 100px;
 }
 
 

@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const GetConnection = require("./db");
 const User = require("./models/Users");
 const Book = require("./models/Books");
+const Message = require("./models/Message");
 const { response } = require("express");
 
 const app = express();
@@ -156,7 +157,7 @@ app.get("/users/:userID", async(req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log("server is listening on port ", PORT);
+  console.log("server is listening on port ", PORT);
 });
 
 // WEBSOCKET   
@@ -173,8 +174,14 @@ app.listen(PORT, () => {
     return result;
   }
 
+  const addMsgToDB = async(sender, reciever, text) => {
+    var msg = await Message.addMsg(sender, reciever, text)
+    console.log("Msg = ",msg)
+  }
+
 const WS = require('ws');
 const { json } = require("body-parser");
+const e = require("express");
 
 const mainWebSocket = new WS.Server({port : 8080})
 
@@ -185,7 +192,7 @@ mainWebSocket.on("connection", (ws) => {
 
   var readyState = ws.readyState
 
-  ws.on("message", (message) => {
+  ws.on("message", async(message) => {
     var msgObj = ParseJson(message)
 
     /* 
@@ -203,19 +210,19 @@ mainWebSocket.on("connection", (ws) => {
         case "INIT":
           var { id: userId } = msgObj.payload;
           CLIENTS[userId] = ws;
-          clientKeys = Object.keys(CLIENTS)
-          console.log("ReadyState = ",readyState)
+          ws.send(JSON.stringify({action: "INIT", payload:{ status: true, message: "You Are Connected", sender: "Server" }}))
           console.log(`Client ${userId} Connected | CLIENTS size = ${Object.keys(CLIENTS).length} | CLIENTS Keys = ${Object.keys(CLIENTS)}`)
-
-          ws.send(JSON.stringify({action: "INIT", payload:{ status: true, message: "You Are Connected", from: "Server" }}))
           break;
         
         case "SEND":
-          var { from, to, message } = msgObj.payload;
-          let toWS = CLIENTS[to];
+          var { sender, receiver, message } = msgObj.payload;
+          let toWS = CLIENTS[receiver];
+          console.log("msgOBJ = ",msgObj)
+          await addMsgToDB(sender, receiver, message) //is this await ok ?
+
           if(toWS){
             console.log("Ready State = ",readyState)
-            toWS.send(JSON.stringify({ action: "INCOMING", payload : { from: from, message: message }}))
+            toWS.send(JSON.stringify({ action: "INCOMING", payload : { sender: sender, receiver: toWS, message: message }}))
             ws.send(JSON.stringify({ action: "SEND", status: true }))
           }else{
             console.log("Ready State = ",readyState)

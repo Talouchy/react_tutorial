@@ -34,7 +34,7 @@ function App() {
           <Switch>
 
             <Route path="/dashboard">
-              { isLoggedIn ? <DashBoardComp logedInUser={logedInUser}/> : <Redirect to="/login"/> }
+              { isLoggedIn ? <DashBoardComp logedInUser={logedInUser} setlogedInUser={setlogedInUser}/> : <Redirect to="/login"/> }
             </Route>
 
             <Route path="/chat">
