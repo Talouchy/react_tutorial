@@ -156,6 +156,20 @@ app.get("/users/:userID", async(req, res, next) => {
   }
 });
 
+app.post("/getmessages", async(req, res, next) => {
+
+  var sender = req.body.sender
+  var receiver = req.body.receiver
+
+  try {
+    var messages = await Message.getMessages(sender, receiver)
+    res.status(200).json({messages: messages})
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
+
+})
+
 app.listen(PORT, () => {
   console.log("server is listening on port ", PORT);
 });
@@ -174,14 +188,7 @@ app.listen(PORT, () => {
     return result;
   }
 
-  const addMsgToDB = async(sender, reciever, text) => {
-    var msg = await Message.addMsg(sender, reciever, text)
-    console.log("Msg = ",msg)
-  }
-
 const WS = require('ws');
-const { json } = require("body-parser");
-const e = require("express");
 
 const mainWebSocket = new WS.Server({port : 8080})
 
@@ -218,11 +225,11 @@ mainWebSocket.on("connection", (ws) => {
           var { sender, receiver, message } = msgObj.payload;
           let toWS = CLIENTS[receiver];
           console.log("msgOBJ = ",msgObj)
-          await addMsgToDB(sender, receiver, message) //is this await ok ?
+          await Message.addMsg(sender, receiver, message)
 
           if(toWS){
             console.log("Ready State = ",readyState)
-            toWS.send(JSON.stringify({ action: "INCOMING", payload : { sender: sender, receiver: toWS, message: message }}))
+            toWS.send(JSON.stringify({ action: "INCOMING", payload : { sender: sender, receiver: receiver, message: message }}))
             ws.send(JSON.stringify({ action: "SEND", status: true }))
           }else{
             console.log("Ready State = ",readyState)

@@ -13,9 +13,22 @@ Message.addMsg = function(sender, receiver, text){
   return new Promise( async(resolve, reject) => {
     try {
       const conn = await GetConnection();
-      var result = await conn.query(`INSERT INTO ${TBL_Messages} (sender, receiver, text) VALUE (?,?,?)`, [sender, receiver, text]) 
-      var msg = result
-      resolve(new Message(msg)) //do we need affected rows ?!
+      var result = await conn.query(`INSERT INTO ${TBL_Messages} (sender, receiver, text) VALUE (?,?,?)`, [sender, receiver, text])
+      resolve(result)
+      conn.release();
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+Message.getMessages = function(sender, receiver){
+  return new Promise( async(resolve, reject) => {
+    try {
+      var conn = await GetConnection();
+      var result = await conn.query(`SELECT * FROM ${TBL_Messages} WHERE (sender=? AND receiver=?) || (sender=? AND receiver=?) `,[sender, receiver, receiver, sender])
+      var messages = result[0].map((msg) => new Message(msg))
+      resolve(messages)
       conn.release();
     } catch (error) {
       reject(error)

@@ -542,6 +542,16 @@
   border-radius: 0px;
 }
 
+.left {
+  position: absolute;
+  left: 10px
+}
+
+.right {
+  position: absolute;
+  right: 10px
+}
+
 
 @keyframes App-logo-spin {
   from {
