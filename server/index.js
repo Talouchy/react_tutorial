@@ -197,8 +197,6 @@ var CLIENTS = {};
 mainWebSocket.on("connection", (ws) => {   
   console.log("WebSocket Connected")
 
-  var readyState = ws.readyState
-
   ws.on("message", async(message) => {
     var msgObj = ParseJson(message)
 
@@ -217,8 +215,9 @@ mainWebSocket.on("connection", (ws) => {
         case "INIT":
           var { id: userId } = msgObj.payload;
           CLIENTS[userId] = ws;
+          CLIENTS[userId].isConnected = true;
+          console.log(`MainWebSocket Clients Keys = ${Object.keys(mainWebSocket.clients)} | MainWebSocket Clients = ${mainWebSocket.clients}`)
           ws.send(JSON.stringify({action: "INIT", payload:{ status: true, message: "You Are Connected", sender: "Server" }}))
-          console.log(`Client ${userId} Connected | CLIENTS size = ${Object.keys(CLIENTS).length} | CLIENTS Keys = ${Object.keys(CLIENTS)}`)
           break;
         
         case "SEND":
@@ -228,11 +227,9 @@ mainWebSocket.on("connection", (ws) => {
           await Message.addMsg(sender, receiver, message)
 
           if(toWS){
-            console.log("Ready State = ",readyState)
             toWS.send(JSON.stringify({ action: "INCOMING", payload : { sender: sender, receiver: receiver, message: message }}))
             ws.send(JSON.stringify({ action: "SEND", status: true }))
           }else{
-            console.log("Ready State = ",readyState)
             ws.send(JSON.stringify({ action: "SEND", status: false, message: "User Not Online" }))
           }
           break;
