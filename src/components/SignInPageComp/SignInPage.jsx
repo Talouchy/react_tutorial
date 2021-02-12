@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Container, Button, Input, InputGroup, Content, Icon, Checkbox, Alert } from "rsuite";
 import { Link, useHistory } from "react-router-dom";
 import "rsuite/dist/styles/rsuite-default.css";
+import "./SignInPage.css";
 
 function SignInComp({ LogInUser }) {
   

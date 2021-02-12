@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Content, Table, Button, Divider, Input } from "rsuite";
 import { useHistory } from "react-router-dom";
+import "./UserList.css";
 const { Column, HeaderCell, Cell } = Table;
 
 function EditableCell({ onChange , ...props}) {
@@ -124,51 +125,51 @@ function UserListComp() {
   }
 
   return(
-    <Container className="app-content">
       <Content className="Table-div">
-        <div className="main-div">
-          <Table data={userList} height={300} onRowClick={onRowClick}>
+        <div className="form-div">
+          <div className="main-div">
+            <Table data={userList} height={300} onRowClick={onRowClick}>
 
-            <Column align="center" width={112}>
-              <HeaderCell style={{ color: "red" }}>ID</HeaderCell>
-              <EditableCell dataKey="id"></EditableCell>
-            </Column>
+              <Column align="center" width={112}>
+                <HeaderCell style={{ color: "red" }}>ID</HeaderCell>
+                <EditableCell dataKey="id"></EditableCell>
+              </Column>
 
-            <Column width={112}>
-              <HeaderCell style={{ color: "red" }}>Name</HeaderCell>
-              <EditableCell dataKey="name" onChange={handleChange}></EditableCell>
-            </Column>
+              <Column width={112}>
+                <HeaderCell style={{ color: "red" }}>Name</HeaderCell>
+                <EditableCell dataKey="name" onChange={handleChange}></EditableCell>
+              </Column>
 
-            <Column width={150}>
-              <HeaderCell style={{ color: "red" }}>Email</HeaderCell>
-              <EditableCell dataKey="email" onChange={handleChange}></EditableCell>
-            </Column>
+              <Column width={150}>
+                <HeaderCell style={{ color: "red" }}>Email</HeaderCell>
+                <EditableCell dataKey="email" onChange={handleChange}></EditableCell>
+              </Column>
 
-            <Column width={150}>
-              <HeaderCell style={{ color: "red" }}>Password</HeaderCell>
-              <EditableCell dataKey="password" onChange={handleChange}></EditableCell>
-            </Column>
+              <Column width={150}>
+                <HeaderCell style={{ color: "red" }}>Password</HeaderCell>
+                <EditableCell dataKey="password" onChange={handleChange}></EditableCell>
+              </Column>
 
-            <Column fixed="right" width={130}>
-              <HeaderCell style={{ color: "red" }}>ACTION</HeaderCell>
-              <Cell>
-                {(rowData) => {
-                  return (
-                    <span>
-                      <Button appearance="subtle" data-element-type={rowData.status ? "save" : "edit"}>{rowData.status ? "Save" : "Edit"}</Button>
-                      <Divider vertical />
-                      <Button appearance="subtle" data-element-type={"remove"}>Remove</Button>
-                    </span>
-                  )
-                } 
-                }
-              </Cell>
-            </Column>
-            
-          </Table>
+              <Column fixed="right" width={130}>
+                <HeaderCell style={{ color: "red" }}>ACTION</HeaderCell>
+                <Cell>
+                  {(rowData) => {
+                    return (
+                      <span>
+                        <Button appearance="subtle" data-element-type={rowData.status ? "save" : "edit"}>{rowData.status ? "Save" : "Edit"}</Button>
+                        <Divider vertical />
+                        <Button appearance="subtle" data-element-type={"remove"}>Remove</Button>
+                      </span>
+                    )
+                  } 
+                  }
+                </Cell>
+              </Column>
+              
+            </Table>
+          </div>
         </div>
       </Content>
-    </Container>
   )
 }
 

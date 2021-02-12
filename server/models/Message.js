@@ -26,7 +26,7 @@ Message.getMessages = function(sender, receiver){
   return new Promise( async(resolve, reject) => {
     try {
       var conn = await GetConnection();
-      var result = await conn.query(`SELECT * FROM ${TBL_Messages} WHERE (sender=? AND receiver=?) || (sender=? AND receiver=?) `,[sender, receiver, receiver, sender])
+      var result = await conn.query(`SELECT text, sender, receiver FROM ${TBL_Messages} WHERE (sender=? AND receiver=?) || (sender=? AND receiver=?) `,[sender, receiver, receiver, sender])
       var messages = result[0].map((msg) => new Message(msg))
       resolve(messages)
       conn.release();

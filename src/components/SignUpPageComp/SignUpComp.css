@@ -1,0 +1,69 @@
+.app-container {
+  display: grid;
+  place-content: center;
+}
+
+.form-signup {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr max-content;
+  border: 1px solid rgb(204, 198, 198);
+  border-radius: 4px;
+  place-content: center;
+  padding: 10px;
+}
+
+.sign-up-title {
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+.signup-left-div {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+  place-content: center;
+  padding: 10px;
+}
+
+.form-signup .left-top-div {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr 1fr 1fr 1fr;
+}
+
+.sign-up-title {
+  color: rgb(218, 88, 88);
+}
+
+.credentials {
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid rgb(190, 60, 60);
+}
+
+.left-bottom-div {
+  margin-top: 15px;
+}
+
+.left-bottom-div .sign-up-btn {
+  background-color: rgb(219, 84, 84);
+  margin-top: 10px;
+  margin-left: 8px;
+}
+
+.right-div {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+  text-align: center;
+}
+
+.link-to-signin {
+  color: rgb(190, 60, 60);
+  text-decoration: underline;
+  margin-bottom: 10px;
+  background-color: transparent;
+}

@@ -1,0 +1,16 @@
+.Table-div {
+  border: 1px solid rgb(190, 178, 178);
+  border-radius: 4px;
+  height: 80vh;
+  width: 100vh;
+  display: grid;
+  grid-gap: 10px;
+  place-self: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.main-div {
+  display: grid;
+  grid-template-columns: 1fr;
+}

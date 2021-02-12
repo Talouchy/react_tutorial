@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Container } from "rsuite";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import SignInComp from "./components/SignInPage";
-import SignUpComp from "./components/SingUpPage";
-import FooterComp from "./components/Footer";
-import HeaderComp from "./components/Header";
-import UserListComp from "./components/UserList";
-import BooksComp from "./components/Books"
-import AddBookComp from "./components/AddBook"
-import UserPageComp from "./components/UserPage"
-import HomePageComp from "./components/HomePage"
-import DashBoardComp from "./components/DashBoard"
-import ChatComp from "./components/Chat"
+import SignInComp from "./components/SignInPageComp/SignInPage";
+import SignUpComp from "./components/SignUpPageComp/SingUpPage";
+import FooterComp from "./components/FooterComp/Footer";
+import HeaderComp from "./components/HeaderComp/Header";
+import UserListComp from "./components/UserListPageComp/UserList";
+import BooksComp from "./components/BooksComp/Books"
+import AddBookComp from "./components/AddBookComp/AddBook"
+import UserPageComp from "./components/UserPageComp/UserPage"
+import HomePageComp from "./components/HomePageComp/HomePage"
+import DashBoardComp from "./components/DashBoardComp/DashBoard"
+import ChatComp from "./components/ChatComp/Chat"
 import "./App.css";
 
 function App() {
@@ -28,9 +28,7 @@ function App() {
     <Router>
       <Container className="app-container">
         <HeaderComp logedInUser={logedInUser} />
-        {/* {JSON.stringify(logedInUser)} */}
 
-        {/* <Content className="app-content"> */}
           <Switch>
 
             <Route path="/dashboard">
@@ -70,7 +68,6 @@ function App() {
             </Route>
 
           </Switch>
-        {/* </Content> */}
 
         <FooterComp />
       </Container>

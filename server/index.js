@@ -54,29 +54,6 @@ app.get("/fetchUsers", async(req, res, next) => {
   }
 })
 
-app.post("/removeuser", (req, res, next) => {
-  var userToRemove = req.body.userToRemove
-  var onlineClientsIds = Object.keys(CLIENTS)
-  var onlineClientsLength = Object.keys(CLIENTS).length
-
-  if(CLIENTS[userToRemove.id]){
-    delete CLIENTS[userToRemove.id];
-  }
-  console.log("NEW CLIENTS = ",Object.keys(CLIENTS))
-
-  res.status(200).json({ newClientsArr: CLIENTS })
-})
-
-app.get("/resetclients", (req, res, next) => {
-
-  try {
-    CLIENTS = {}
-    res.status(200).json({ clients: CLIENTS})
-  } catch (error) {
-    res.status(500).json({ error: error })
-  }
-})
-
 app.put("/updateusers",async (req, res, next) => {
 
   var newUserData = req.body.UpdatedUser
@@ -188,14 +165,39 @@ app.listen(PORT, () => {
     return result;
   }
 
+  
+  const SendOnlineClientsToAll = async (clients = {}) => {
+    
+    var onlineClientsIds = Object.keys(mainWebSocket.clients);
+    var connectedClients = await User.FindUsersByID(onlineClientsIds)
+    
+    Object.values(clients).forEach(ws => {
+      SendOnlineUsers(ws, connectedClients)
+    })
+  }
+  
+  const SendOnlineUsers = (ws, connectedClients) => {
+    try {
+      ws.send(JSON.stringify({ action: "CONNECTED_CLIENTS", payload: { connectedClients }}))
+    } catch (error) {
+      ws.send(JSON.stringify({ action: "ERROR", payload: {errorMessage: "Error Getting Connected Clients" }}))
+    }
+  }
+
+  const HeartBeat = (ws) => {
+    console.log(`${ws.id} sent a PING`)
+    ws.ping(() => {})
+  }
+
 const WS = require('ws');
 
 const mainWebSocket = new WS.Server({port : 8080})
 
-var CLIENTS = {};
+var nextID = 1;
 
 mainWebSocket.on("connection", (ws) => {   
   console.log("WebSocket Connected")
+  ws.id = `${nextID++}_${Date.now()}`
 
   ws.on("message", async(message) => {
     var msgObj = ParseJson(message)
@@ -208,22 +210,23 @@ mainWebSocket.on("connection", (ws) => {
     */
 
     if(msgObj.error){
-      ws.send("msgObj ERROR")
+      ws.send(JSON.stringify({ action: "ERROR", payload: {errorMessage: "msgObj ERROR"} }))
     }else{
       switch(msgObj.action){
 
         case "INIT":
           var { id: userId } = msgObj.payload;
-          CLIENTS[userId] = ws;
-          CLIENTS[userId].isConnected = true;
-          console.log(`MainWebSocket Clients Keys = ${Object.keys(mainWebSocket.clients)} | MainWebSocket Clients = ${mainWebSocket.clients}`)
+          ws.userId = userId
+          mainWebSocket.clients[userId] = ws;
+
+          SendOnlineClientsToAll(mainWebSocket.clients)
           ws.send(JSON.stringify({action: "INIT", payload:{ status: true, message: "You Are Connected", sender: "Server" }}))
           break;
         
         case "SEND":
           var { sender, receiver, message } = msgObj.payload;
-          let toWS = CLIENTS[receiver];
-          console.log("msgOBJ = ",msgObj)
+          let toWS = mainWebSocket.clients[receiver];
+          console.log("CLIENT TO = ",toWS)
           await Message.addMsg(sender, receiver, message)
 
           if(toWS){
@@ -236,4 +239,15 @@ mainWebSocket.on("connection", (ws) => {
       }
     }
   })
+
+  ws.on("close", (code, reason) => {
+    console.log(`Disconnected: code ${code} , reason: ${reason}`)             // Check the reason
+    delete mainWebSocket.clients[ws.userId]
+    clearInterval(ws.timer)
+    SendOnlineClientsToAll(mainWebSocket.clients)
+  })
+
+  ws.on("pong", () => console.log(`${ws.id} received a PONG`))
+
+  ws.timer = setInterval(() => HeartBeat(ws), 3000)
 })

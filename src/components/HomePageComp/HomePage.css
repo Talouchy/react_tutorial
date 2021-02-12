@@ -1,0 +1,101 @@
+.homepage-container {
+  background-color: rgb(253, 252, 250);
+}
+
+.app-content-homepage {
+  display: grid;
+  grid-template-rows: 2fr 1.5fr 1fr;
+  grid-gap: 10px;
+  width: 60%;
+  margin-left: 21%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  /* border: 1px solid  rgb(219, 84, 84); */
+  border-radius: 15px;
+  padding: 1%;
+}
+
+.Top-div-homepage {
+  display: grid;
+  grid-template-columns: 1fr 0.4fr;
+  grid-gap: 5px;
+}
+
+.carousel {
+  border-radius: 10px;
+}
+
+.Top-div-Left-h {
+  display: grid;
+  /* grid-template-rows: repeat(3,1fr); */
+  border-left: 1px solid rgb(230, 141, 141);
+  border-radius: 0px;
+  padding-left: 10px;
+}
+
+.Mid-div {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 0.5fr;
+  grid-gap: 7px;
+  border-top: 1.5px solid rgb(219, 84, 84);
+  border-bottom: 1px solid rgb(219, 84, 84);
+  border-radius: 0px;
+  padding: 10px;
+}
+
+.Top-div-Right {
+  padding-right: 10px;
+} 
+
+.card-title {
+  color: red;
+}
+
+.panels {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  grid-gap: 5px;
+  padding: 5px;
+}
+
+.panels-Two {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  padding-top: 8px;
+}
+
+.Mid-div-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.Quotes {
+  color: black;
+}
+
+.profile-pic {
+  padding: 10px;
+}
+
+.profile-credentials {
+  padding: 10px;
+  color: black;
+  font-size: 1.25em;
+  font-weight: bold;
+  display: grid;
+  grid-gap: 40px;
+}
+
+.EC-book {
+  text-align: center;
+}
+
+.book-link {
+  color: red;
+  display: grid;
+  padding: 10px;
+}
+
+.EC-img {
+  padding-top: 20px;
+}

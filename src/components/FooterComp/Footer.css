@@ -1,0 +1,11 @@
+.app-container .app-footer {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: repeat(3, max-content);
+  place-content: center;
+  background-color: rgb(180, 60, 60);
+}
+
+.app-footer .Footer-txt-clr {
+  color: white;
+}

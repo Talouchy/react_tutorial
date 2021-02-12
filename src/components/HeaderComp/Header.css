@@ -1,0 +1,24 @@
+.app-container .app-header {
+  background-color:rgb(218, 88, 88);
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.app-header .header-title {
+  display: grid;
+  place-content: center;
+  font-size: 2em;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+}
+
+.app-header .header-icon {
+  width: 4vw;
+  display: grid;
+  place-content: center;
+}
+
+.app-header .rs-dropdown-toggle {
+  color: white !important;
+}

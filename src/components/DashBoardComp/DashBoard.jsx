@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button, Container, Content, Input, Uploader } from "rsuite";
+import "./DashBoard.css";
 
 function DashBoardComp( {logedInUser, setlogedInUser} ){
 

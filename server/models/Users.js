@@ -107,7 +107,7 @@ User.FindUsersByID = function(IDs){
       var foundusers = result[0].map((res) => new User(res))
       conn.release();
       resolve(foundusers)
-    } catch (error) {
+    }catch (error) {
       reject(error)
     }
   })

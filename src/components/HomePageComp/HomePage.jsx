@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Content, Carousel, Panel, PanelGroup } from "rsuite";
+import "./HomePage.css";
 
 function HomePageComp() {
   return(

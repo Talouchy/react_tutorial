@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Button, Input, InputGroup, Content, Icon, Checkbox } from "rsuite";
 import { Link } from "react-router-dom";
-
+import "./SignUpComp.css";
 
 function SingUpComp({ ToggleForm }) {
 

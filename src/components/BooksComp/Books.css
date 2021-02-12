@@ -1,0 +1,17 @@
+.Table-div-Books {
+  border: 1px solid rgb(190, 178, 178);
+  border-radius: 4px;
+  height: 100vh;
+  width: 60vw;
+  display: grid;
+  text-align: center;
+  grid-gap: 10px;
+  place-self: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.main-div-Books {
+  display: grid;
+  grid-template-columns: 1fr;
+}

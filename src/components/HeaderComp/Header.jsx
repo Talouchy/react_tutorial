@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Header, Icon, Navbar, Nav, Dropdown } from "rsuite";
+import "./Header.css";
 
 function MyNavBarItem({ to, eventkey, label, icon }) {
   return(
