@@ -48,9 +48,8 @@ function DashBoardComp( {logedInUser, setlogedInUser} ){
   console.log("isEditable = ",isEditable)
 
   return(
-    <Container className="dashboard-container">
-      <Content className="dashboard-main-div">
-
+      <Content className="dashboard-content">
+        <div className="dashboard-main-div">
           <div className="top-div-dashboard">
 
             <div className="left-div-dashboard-top">
@@ -64,9 +63,9 @@ function DashBoardComp( {logedInUser, setlogedInUser} ){
               <div></div>
             </div>
 
-          </div>
+            </div>
 
-          <div className="bottom-div-dashboard">
+            <div className="bottom-div-dashboard">
 
             <div className="top-div-bottom">
               <Button className="edit-btn-dash" onClick={setEditMode}>{isEditable === true ? "Save" : "Edit"}</Button>
@@ -79,10 +78,9 @@ function DashBoardComp( {logedInUser, setlogedInUser} ){
               <EditMode className="bottom-inputs-dash" id={"books"} label="Added Books" inpvalue={logedInUser.books}/>
             </div>
 
+            </div>
           </div>
-
       </Content>
-    </Container>
   )
 }
 export default DashBoardComp;

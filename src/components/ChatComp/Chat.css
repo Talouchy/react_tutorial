@@ -1,13 +1,15 @@
 .app-content-chat {
   display: grid;
   place-content: center;
+  grid-template-columns: 650px;
   height: 100vh;
   background-color: rgb(255, 255, 255);
 }
 
 .chat-main-div {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
   border-radius: 5px;
   height: 350px;
   width: 492px;
@@ -17,14 +19,56 @@
 }
 
 .chat-left-div {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: 0px;
+  transition: all 1s ease-in-out;
+  z-index: 0;
+}
+
+.left-div-header {
+  border: 1px solid rgb(134, 130, 130);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: 0px;
+  padding: 13.4px;
+  width: 159px;
+  text-align: center;
+  color: white;
+  background-color: #b53141;
+}
+
+.Wallpaper-sec {
+  border: 1px solid rgb(134, 130, 130); ;
+  border-right: 0px;
+  border-top: 0px;
+  border-bottom-left-radius: 8px;
+  margin-left: 5px;
+  background-color: #dcd5d5;
+  height: 85.5%;
+}
+
+.chat-middle-div {
   display: grid;
+  position: relative;
   grid-template-rows: 50px 1fr max-content;
   width: 310px;
+  height: 350px;
+  overflow: auto;
   background-color: white;
   z-index: 1;
 }
 
-.chat-left-div .right {
+.mid-msg-div {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 50px;
+  bottom: 47px;
+  overflow: auto;
+}
+
+.chat-middle-div .right {
   text-align: right;
 }
 
@@ -39,7 +83,6 @@
 .msg-sec {
   display: grid;
   grid-template-rows: 1fr max-content;
-  margin-left: 5px;
 }
 
 .Action-sec {
@@ -49,8 +92,11 @@
   padding: 5px;
   border: 1px solid rgb(134, 130, 130);
   border-top: 0px;
-  border-bottom-left-radius: 8px;
   background-color: #b53141;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
 }
 
 .text-sec {
@@ -63,9 +109,13 @@
   padding: 5px;
   border: 1px solid rgb(134, 130, 130);
   background-color: #b53141;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
   border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
 }
 
 .loged-in-user {
@@ -140,9 +190,9 @@
   place-content: center;
   border-top: 0px;
   border: 1px solid rgb(134, 130, 130);
-  border-bottom-left-radius: 8px;
-  margin-left: 4px;
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .avatar {
@@ -184,4 +234,16 @@
 
 .rs-badge-content {
   background-color: #f4433600;
+}
+
+.mid-msg-div::-webkit-scrollbar {
+  width: 5px;
+}
+
+.mid-msg-div::-webkit-scrollbar-thumb {
+  background: #b53141;
+}
+
+.mid-msg-div::-webkit-scrollbar-thumb:hover {
+  background: #d34b57;
 }
